@@ -20,6 +20,47 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Environment Variables Setup
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-project-url
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY=your-supabase-publishable-key
+SUPABASE_SECRET_KEY=your-supabase-secret-key
+OPENAI_API_KEY=your-openai-api-key
+OLLAMA_API_URL=http://127.0.0.1:11434
+```
+
+### Supabase Keys Required:
+
+1. **NEXT_PUBLIC_SUPABASE_URL**: Your Supabase project URL
+
+   - Found in: Supabase Dashboard → Project Settings → API → Project URL
+
+2. **NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY**: Your Supabase publishable key (replaces legacy anon key)
+
+   - Found in: Supabase Dashboard → Project Settings → API → Publishable Default Key
+   - This is safe to expose in the browser (client-side operations)
+
+3. **SUPABASE_SECRET_KEY**: Your Supabase secret key (replaces legacy service_role key)
+   - Found in: Supabase Dashboard → Project Settings → API → Secret Key (starts with `sb_secret_...`)
+   - ⚠️ Keep this secret - only use in server-side code (for vector operations, embeddings, etc.)
+
+### OpenAI Key:
+
+- **OPENAI_API_KEY**: Your OpenAI API key
+  - Get it from: https://platform.openai.com/api-keys
+
+### Ollama Setup:
+
+- **OLLAMA_API_URL**: Default is `http://127.0.0.1:11434`
+  - Only needed if using local Ollama
+  - To use local Ollama:
+    1. Install Ollama: `brew install ollama`
+    2. Start Ollama service: `ollama serve`
+    3. Pull the model: `ollama pull llama3.1:8b-instruct`
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
