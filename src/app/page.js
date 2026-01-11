@@ -1,33 +1,36 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/hooks/useAuth";
+import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
+import FeatureCards from "@/components/FeatureCards";
+import KeyFeatures from "@/components/KeyFeatures";
+
 export default function Home() {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    router.push("/");
+    router.refresh();
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full flex-col items-center justify-center p-8">
-        <div className="max-w-2xl text-center">
-          <h1 className="text-4xl font-bold mb-4">Product Knowledge Chatbot</h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-8">
-            Click the chat button in the bottom right corner to get started
-          </p>
-          <div className="space-y-4 text-left">
-            <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-              <h2 className="font-semibold mb-2">Features</h2>
-              <ul className="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-                <li>• Ask questions about your products</li>
-                <li>• Switch between OpenAI and Ollama</li>
-                <li>• Answers based strictly on your content</li>
-              </ul>
-            </div>
-            <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
-              <h2 className="font-semibold mb-2">Get Started</h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Add content via the{" "}
-                <a href="/admin" className="text-blue-500 hover:underline">
-                  admin interface
-                </a>{" "}
-                to enable the chatbot
-              </p>
-            </div>
-          </div>
-        </div>
+    <div className="min-h-screen bg-black">
+      <Header
+        showAuth={true}
+        user={user}
+        loading={loading}
+        onLogout={handleLogout}
+      />
+
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <HeroSection loading={loading} user={user} />
+        <FeatureCards />
+        <KeyFeatures />
       </main>
     </div>
   );

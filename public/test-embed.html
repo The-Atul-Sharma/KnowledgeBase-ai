@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Test page for embedding the chatbot widget"
+    />
+    <title>Embed Chatbot Test</title>
+    <style>
+      :root {
+        --color-bg-primary: #f5f5f5;
+        --color-bg-secondary: #ffffff;
+        --color-bg-info: #e3f2fd;
+        --color-text-primary: #333333;
+        --color-text-secondary: #666666;
+        --spacing-xs: 0.5rem;
+        --spacing-sm: 1rem;
+        --spacing-md: 1.5rem;
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+        --border-radius-sm: 4px;
+        --border-radius-md: 8px;
+        --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial,
+          sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: var(--spacing-xl) var(--spacing-lg);
+        background: var(--color-bg-primary);
+        line-height: 1.6;
+        color: var(--color-text-primary);
+      }
+
+      main {
+        background: var(--color-bg-secondary);
+        padding: var(--spacing-xl);
+        border-radius: var(--border-radius-md);
+        box-shadow: var(--shadow-sm);
+      }
+
+      h1 {
+        margin: 0 0 var(--spacing-md) 0;
+        color: var(--color-text-primary);
+        font-size: 2rem;
+        font-weight: 600;
+      }
+
+      p {
+        color: var(--color-text-secondary);
+        margin: 0 0 var(--spacing-md) 0;
+      }
+
+      .instructions {
+        background: var(--color-bg-info);
+        padding: var(--spacing-md);
+        border-radius: var(--border-radius-sm);
+        margin: var(--spacing-lg) 0;
+      }
+
+      .instructions strong {
+        display: block;
+        margin-bottom: var(--spacing-sm);
+        color: var(--color-text-primary);
+      }
+
+      .instructions ol {
+        margin: var(--spacing-sm) 0 0 0;
+        padding-left: var(--spacing-lg);
+      }
+
+      .instructions li {
+        margin-bottom: var(--spacing-xs);
+        color: var(--color-text-secondary);
+      }
+
+      code {
+        background: var(--color-bg-secondary);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 0.875rem;
+        font-family: "Courier New", monospace;
+        color: var(--color-text-primary);
+      }
+
+      .note {
+        margin-top: var(--spacing-lg);
+        padding-top: var(--spacing-md);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      @media (max-width: 600px) {
+        body {
+          padding: var(--spacing-md);
+        }
+
+        main {
+          padding: var(--spacing-md);
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Embed Chatbot</h1>
+      <p>
+        This is a test page to verify the embed chatbot script is working
+        correctly.
+      </p>
+
+      <section class="instructions" aria-labelledby="instructions-heading">
+        <strong id="instructions-heading">Instructions:</strong>
+        <ol>
+          <li>
+            Make sure your Next.js dev server is running (<code
+              >npm run dev</code
+            >)
+          </li>
+          <li>
+            Open this page in your browser:
+            <code>http://localhost:3000/test-embed.html</code>
+          </li>
+          <li>You should see a chat button in the bottom-right corner</li>
+          <li>Click the button to open the chat widget</li>
+          <li>Try sending a message to test the functionality</li>
+        </ol>
+      </section>
+
+      <p class="note">
+        <strong>Note:</strong> Replace <code>YOUR_USER_ID</code> and
+        <code>YOUR_BASE_URL</code> in the script tag below with your actual
+        values from the Admin panel.
+      </p>
+    </main>
+
+    <script
+      src="http://localhost:3000/embed.js"
+      data-user-id="c482ef2f-d971-404d-9565-ba0fae462982"
+      data-base-url="http://localhost:3000"
+    ></script>
+  </body>
+</html>

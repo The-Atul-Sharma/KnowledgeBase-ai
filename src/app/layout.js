@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ChatWidget from "@/components/ChatWidget";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,17 +15,19 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Chatbot",
-  description: "Personalized chatbot for your needs",
+  description: "Personalized chatbot for your knowledge base",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black`}
       >
-        {children}
-        <ChatWidget />
+        <ErrorBoundary>
+          {children}
+          <ChatWidget />
+        </ErrorBoundary>
       </body>
     </html>
   );

@@ -3,38 +3,51 @@ import { generateEmbeddings, generateEmbedding } from "./embeddings";
 
 const client = supabaseAdmin || supabase;
 
-export async function storeChunks(chunks, embeddingProvider = null) {
+export async function storeChunks(chunks, settings = {}, userId = null) {
   if (!chunks?.length) throw new Error("No chunks provided");
 
   const contents = chunks.map((c) => c.content);
-  const embeddings = await generateEmbeddings(contents, embeddingProvider);
+  const embeddings = await generateEmbeddings(contents, settings);
 
   const records = chunks.map((chunk, i) => ({
     content: chunk.content,
     metadata: chunk.metadata || {},
     embedding: embeddings[i],
+    user_id: userId || null,
   }));
 
-  const { error } = await client.from("document_chunks").insert(records);
+  const { data, error } = await client.from("document_chunks").insert(records).select();
 
   if (error) throw error;
+
+  return data || records.map((record, i) => ({
+    id: `temp-${i}`,
+    content: record.content,
+    metadata: record.metadata,
+  }));
 }
 
-export async function ingestContent(text, metadata = {}, embeddingProvider) {
+export async function ingestContent(text, metadata = {}, settings = {}, userId = null) {
   const { chunkText } = await import("./textProcessing.js");
   const chunks = await chunkText(text, { metadata });
-  return storeChunks(chunks, embeddingProvider);
+  return storeChunks(chunks, settings, userId);
 }
 
-export async function deleteChunksByMetadata(metadataFilter) {
+export async function deleteChunksByMetadata(metadataFilter, userId = null) {
   let query = client.from("document_chunks").delete();
+
+  if (userId) {
+    query = query.eq("user_id", userId);
+  }
 
   for (const [k, v] of Object.entries(metadataFilter)) {
     query = query.eq(`metadata->>${k}`, String(v));
   }
 
-  const { error } = await query;
+  const { data, error } = await query.select();
   if (error) throw error;
+
+  return data || [];
 }
 
 export async function similaritySearch(query, options = {}) {
@@ -42,15 +55,17 @@ export async function similaritySearch(query, options = {}) {
     limit = 7,
     threshold = 0.15,
     metadataFilter = {},
-    embeddingProvider = null,
+    settings = {},
+    userId = null,
   } = options;
 
-  const queryEmbedding = await generateEmbedding(query, embeddingProvider);
+  const queryEmbedding = await generateEmbedding(query, settings);
 
   let rpc = client.rpc("match_document_chunks", {
     query_embedding: queryEmbedding,
     match_threshold: threshold,
     match_count: limit,
+    filter_user_id: userId || null,
   });
 
   for (const [k, v] of Object.entries(metadataFilter)) {

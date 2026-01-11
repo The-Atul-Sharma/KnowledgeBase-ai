@@ -1,22 +1,18 @@
 import OpenAI from "openai";
 
-const EMBEDDING_PROVIDER = process.env.EMBEDDING_PROVIDER || "ollama";
 const OPENAI_EMBEDDING_MODEL = "text-embedding-3-small";
 const OPENAI_EMBEDDING_DIMENSION = 1536;
 const OLLAMA_EMBEDDING_MODEL = "nomic-embed-text";
 const OLLAMA_EMBEDDING_DIMENSION = 768;
 
-let openai = null;
-if (process.env.OPENAI_API_KEY) {
-  openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-}
-
-async function generateOpenAIEmbedding(text) {
-  if (!openai) {
-    throw new Error("OPENAI_API_KEY is not set");
+async function generateOpenAIEmbedding(text, apiKey) {
+  if (!apiKey) {
+    throw new Error("OpenAI API key is not set");
   }
+
+  const openai = new OpenAI({
+    apiKey: apiKey,
+  });
 
   try {
     const response = await openai.embeddings.create({
@@ -46,15 +42,16 @@ function normalizeOllamaUrl(url) {
   return url;
 }
 
-async function generateOllamaEmbedding(text) {
-  const rawUrl = process.env.OLLAMA_API_URL || "http://127.0.0.1:11434";
-  const ollamaUrl = normalizeOllamaUrl(rawUrl);
-  const model = OLLAMA_EMBEDDING_MODEL;
-
-  console.log(`[Ollama Embedding] URL: ${ollamaUrl}, Model: ${model}`);
+async function generateOllamaEmbedding(text, settings = {}) {
+  const rawUrl =
+    settings.ollama_api_url ||
+    process.env.OLLAMA_API_URL ||
+    "http://127.0.0.1:11434";
+  const normalizedUrl = normalizeOllamaUrl(rawUrl);
+  const model = settings.ollama_embedding_model || OLLAMA_EMBEDDING_MODEL;
 
   try {
-    const response = await fetch(`${ollamaUrl}/api/embed`, {
+    const response = await fetch(`${normalizedUrl}/api/embed`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +70,6 @@ async function generateOllamaEmbedding(text) {
     }
 
     const data = await response.json();
-    console.log(`[Ollama Embedding] Response keys:`, Object.keys(data));
 
     let embedding = null;
 
@@ -105,9 +101,6 @@ async function generateOllamaEmbedding(text) {
       );
     }
 
-    console.log(
-      `[Ollama Embedding] Generated embedding with dimension: ${embedding.length}`
-    );
     return embedding;
   } catch (error) {
     console.error("Error generating Ollama embedding:", error);
@@ -130,31 +123,35 @@ async function generateOllamaEmbedding(text) {
   }
 }
 
-export async function generateEmbedding(text, provider = null) {
-  const embeddingProvider = provider || EMBEDDING_PROVIDER;
+export async function generateEmbedding(text, settings = {}) {
+  const embeddingProvider = settings.embedding_provider || "ollama";
 
   if (embeddingProvider === "ollama") {
-    return await generateOllamaEmbedding(text);
+    return await generateOllamaEmbedding(text, settings);
   }
 
-  return await generateOpenAIEmbedding(text);
+  return await generateOpenAIEmbedding(text, settings.openai_api_key);
 }
 
-export async function generateEmbeddings(texts, provider = null) {
-  const embeddingProvider = provider || EMBEDDING_PROVIDER;
+export async function generateEmbeddings(texts, settings = {}) {
+  const embeddingProvider = settings.embedding_provider || "ollama";
 
   if (embeddingProvider === "ollama") {
     const embeddings = await Promise.all(
-      texts.map((text) => generateOllamaEmbedding(text))
+      texts.map((text) => generateOllamaEmbedding(text, settings))
     );
     return embeddings;
   }
 
-  if (!openai) {
-    throw new Error("OPENAI_API_KEY is not set");
+  if (!settings.openai_api_key) {
+    throw new Error("OpenAI API key is not set");
   }
 
   try {
+    const openai = new OpenAI({
+      apiKey: settings.openai_api_key,
+    });
+
     const response = await openai.embeddings.create({
       model: OPENAI_EMBEDDING_MODEL,
       input: texts,
@@ -168,15 +165,14 @@ export async function generateEmbeddings(texts, provider = null) {
   }
 }
 
-export function getEmbeddingDimension(provider = null) {
-  const embeddingProvider = provider || EMBEDDING_PROVIDER;
+export function getEmbeddingDimension(settings = {}) {
+  const embeddingProvider = settings.embedding_provider || "ollama";
   return embeddingProvider === "ollama"
     ? OLLAMA_EMBEDDING_DIMENSION
     : OPENAI_EMBEDDING_DIMENSION;
 }
 
 export {
-  EMBEDDING_PROVIDER,
   OPENAI_EMBEDDING_MODEL,
   OPENAI_EMBEDDING_DIMENSION,
   OLLAMA_EMBEDDING_MODEL,

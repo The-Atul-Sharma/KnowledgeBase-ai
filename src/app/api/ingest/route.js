@@ -1,10 +1,12 @@
 import { ingestContent, deleteChunksByMetadata } from "@/lib/vectorStore";
-import { EMBEDDING_PROVIDER } from "@/lib/embeddings";
+import { getSettings } from "@/lib/settings";
 
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { text, metadata = {}, replace = false, embeddingProvider = EMBEDDING_PROVIDER } = body;
+    const { text, metadata = {}, replace = false, userId } = body;
+    
+    const settings = await getSettings(userId);
 
     if (!text || typeof text !== "string") {
       return Response.json(
@@ -14,7 +16,7 @@ export async function POST(request) {
     }
 
     if (replace && metadata.source) {
-      await deleteChunksByMetadata({ source: metadata.source });
+      await deleteChunksByMetadata({ source: metadata.source }, userId);
     }
 
     const result = await ingestContent(
@@ -23,7 +25,8 @@ export async function POST(request) {
         ...metadata,
         ingestedAt: new Date().toISOString(),
       },
-      embeddingProvider
+      settings,
+      userId
     );
 
     return Response.json({
@@ -52,6 +55,7 @@ export async function DELETE(request) {
   try {
     const { searchParams } = new URL(request.url);
     const source = searchParams.get("source");
+    const userId = searchParams.get("userId");
 
     if (!source) {
       return Response.json(
@@ -60,7 +64,7 @@ export async function DELETE(request) {
       );
     }
 
-    const result = await deleteChunksByMetadata({ source });
+    const result = await deleteChunksByMetadata({ source }, userId || null);
 
     return Response.json({
       success: true,

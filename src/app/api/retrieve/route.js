@@ -3,7 +3,7 @@ import { similaritySearch } from "@/lib/vectorStore";
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { query, limit = 5, threshold = 0.7, metadataFilter = {} } = body;
+    const { query, limit = 5, threshold = 0.7, metadataFilter = {}, userId } = body;
 
     if (!query || typeof query !== "string") {
       return Response.json(
@@ -16,6 +16,7 @@ export async function POST(request) {
       limit: Math.min(limit, 20),
       threshold,
       metadataFilter,
+      userId: userId || null,
     });
 
     return Response.json({

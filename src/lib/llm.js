@@ -18,9 +18,10 @@ function formatContext(chunks) {
   return chunks.map((c, i) => `[Context ${i + 1}]\n${c.content}`).join("\n\n");
 }
 
-function buildPrompt(context, question) {
+function buildPrompt(context, question, customPrompt = null) {
+  const systemPrompt = customPrompt || STRICT_SYSTEM_PROMPT;
   return `
-${STRICT_SYSTEM_PROMPT}
+${systemPrompt}
 
 Context from Sales History Review documentation:
 ${context}
@@ -33,25 +34,37 @@ Answer:
 `;
 }
 
-export async function generateResponse(provider, chunks, question) {
+export async function generateResponse(
+  provider,
+  chunks,
+  question,
+  settings = {}
+) {
+  const noResponseText =
+    settings.no_response_text ||
+    "II couldn't find that in the current documentation, but I'm happy to help. Try rephrasing your question or asking about a specific feature.";
+
   if (!chunks || chunks.length === 0) {
-    return "I couldn't find specific information about that in the Sales History Review documentation. Could you try rephrasing your question or asking about a specific feature?";
+    return noResponseText;
   }
 
   const context = formatContext(chunks);
-  const prompt = buildPrompt(context, question);
-
-  console.log(`[LLM] Generating response with ${chunks.length} chunks`);
+  const customPrompt = settings.custom_prompt || null;
+  const prompt = buildPrompt(context, question, customPrompt);
 
   if (provider === "ollama") {
-    return callOllama(prompt);
+    return callOllama(prompt, settings);
   }
 
-  return callOpenAI(prompt);
+  return callOpenAI(prompt, settings.openai_api_key);
 }
 
-async function callOpenAI(prompt) {
-  const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+async function callOpenAI(prompt, apiKey) {
+  if (!apiKey) {
+    throw new Error("OpenAI API key is not set");
+  }
+
+  const openai = new OpenAI({ apiKey });
 
   const res = await openai.chat.completions.create({
     model: "gpt-4o-mini",
@@ -73,10 +86,16 @@ function normalizeOllamaUrl(url) {
   return url;
 }
 
-async function callOllama(prompt) {
-  const rawUrl = process.env.OLLAMA_API_URL || "http://127.0.0.1:11434";
+async function callOllama(prompt, settings = {}) {
+  const rawUrl =
+    settings.ollama_api_url ||
+    process.env.OLLAMA_API_URL ||
+    "http://127.0.0.1:11434";
   const url = normalizeOllamaUrl(rawUrl);
-  const model = process.env.OLLAMA_MODEL || "qwen3:4b-thinking-2507-q8_0";
+  const model =
+    settings.ollama_model ||
+    process.env.OLLAMA_MODEL ||
+    "qwen3:4b-thinking-2507-q8_0";
 
   const res = await fetch(`${url}/api/chat`, {
     method: "POST",

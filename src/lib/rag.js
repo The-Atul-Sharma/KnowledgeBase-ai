@@ -7,14 +7,17 @@ function isGreeting(text) {
 
 export async function generateRAGResponse(query, options = {}) {
   const {
-    provider = "openai",
-    embeddingProvider,
+    provider = "ollama",
+    settings = {},
     metadataFilter = { module: "sales-history-review" },
+    userId = null,
   } = options;
 
   if (isGreeting(query)) {
+    const greetingMessage =
+      settings.greeting_message || "Hi there 👋. How can I help?";
     return {
-      answer: "Hello. How can I help you with Sales History Review?",
+      answer: greetingMessage,
       chunks: [],
     };
   }
@@ -23,34 +26,31 @@ export async function generateRAGResponse(query, options = {}) {
     limit: 10,
     threshold: 0.1,
     metadataFilter,
-    embeddingProvider,
+    settings,
+    userId,
   });
 
-  console.log(`[RAG] Query: "${query}", Retrieved chunks: ${retrieved.length}`);
-
   if (retrieved.length === 0) {
-    console.log(`[RAG] No chunks found with metadata filter, trying without filter...`);
     retrieved = await similaritySearch(query, {
       limit: 10,
       threshold: 0.1,
       metadataFilter: {},
-      embeddingProvider,
+      settings,
+      userId,
     });
-    console.log(`[RAG] Retrieved ${retrieved.length} chunks without filter`);
   }
 
   if (retrieved.length === 0) {
-    console.log(`[RAG] Still no chunks, trying with even lower threshold...`);
     retrieved = await similaritySearch(query, {
       limit: 15,
       threshold: 0.05,
       metadataFilter: {},
-      embeddingProvider,
+      settings,
+      userId,
     });
-    console.log(`[RAG] Retrieved ${retrieved.length} chunks with threshold 0.05`);
   }
 
-  const answer = await generateResponse(provider, retrieved, query);
+  const answer = await generateResponse(provider, retrieved, query, settings);
 
   return {
     answer,

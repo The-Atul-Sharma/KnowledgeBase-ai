@@ -1,11 +1,12 @@
 import { generateRAGResponse } from "@/lib/rag";
+import { getSettings } from "@/lib/settings";
 
 export async function POST(request) {
   try {
     const body = await request.json();
     const {
       query,
-      provider = "openai",
+      userId,
       limit = 5,
       threshold = 0.3,
       metadataFilter = {},
@@ -18,18 +19,26 @@ export async function POST(request) {
       );
     }
 
-    if (provider !== "openai" && provider !== "ollama") {
+    const settings = await getSettings(userId);
+    const provider = settings.llm_provider || "ollama";
+
+    if (provider === "openai" && !settings.openai_api_key) {
       return Response.json(
-        { success: false, error: "Provider must be 'openai' or 'ollama'" },
+        {
+          success: false,
+          error: "OpenAI API key not configured. Please configure it in admin settings.",
+        },
         { status: 400 }
       );
     }
 
     const result = await generateRAGResponse(query, {
       provider,
+      settings,
       limit: Math.min(limit, 10),
       threshold,
       metadataFilter,
+      userId: userId || null,
     });
 
     return Response.json({

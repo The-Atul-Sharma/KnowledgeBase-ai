@@ -1,0 +1,27 @@
+export const DEFAULT_SETTINGS = {
+  llm_provider: "ollama",
+  embedding_provider: "ollama",
+  ollama_api_url: "http://127.0.0.1:11434",
+  ollama_model: "qwen3:4b-thinking-2507-q8_0",
+  ollama_embedding_model: "nomic-embed-text",
+  openai_api_key: null,
+  chatbot_name: "Fin",
+  header_title: "Knowledge Base Support",
+  icon_url: "",
+  greeting_message:
+    "Hi there 👋 You are now speaking with Fin. How can I help?",
+  custom_prompt: "",
+  no_response_text:
+    "I couldn't find that in the current documentation, but I'm happy to help. Try rephrasing your question or asking about a specific feature.",
+  input_placeholder: "Ask a question...",
+  header_color: "#3b82f6",
+  response_card_color: "#ffffff",
+  response_text_color: "#111827",
+  response_metadata_color: "#6b7280",
+  user_card_color: "#3b82f6",
+  user_text_color: "#ffffff",
+  close_icon_color: "#000000",
+  close_icon_bg_color: "#cccccc",
+  chatbot_icon_bg_color: "#3b82f6",
+  send_icon_color: "#3b82f6",
+};

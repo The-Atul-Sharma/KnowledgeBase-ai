@@ -1,11 +1,87 @@
 import { supabase } from "@/lib/supabase";
 
-export async function GET() {
+function groupChunksBySource(chunks) {
+  const grouped = {};
+
+  chunks?.forEach((chunk) => {
+    const source = chunk.metadata?.source || "unknown";
+    if (!grouped[source]) {
+      grouped[source] = {
+        source,
+        chunks: [],
+        totalChunks: 0,
+        title: chunk.metadata?.title || "N/A",
+        createdAt: chunk.created_at,
+      };
+    }
+    grouped[source].chunks.push({
+      id: chunk.id,
+      content: chunk.content.substring(0, 150) + "...",
+      similarity: null,
+    });
+    grouped[source].totalChunks++;
+  });
+
+  return Object.values(grouped);
+}
+
+function filterSources(sources, searchQuery) {
+  if (!searchQuery) {
+    return sources;
+  }
+
+  const lowerQuery = searchQuery.toLowerCase();
+  return sources.filter((sourceItem) => {
+    return (
+      sourceItem.source.toLowerCase().includes(lowerQuery) ||
+      sourceItem.title?.toLowerCase().includes(lowerQuery)
+    );
+  });
+}
+
+function paginate(items, page, itemsPerPage) {
+  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const startIndex = (page - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedItems = items.slice(startIndex, endIndex);
+
+  return {
+    items: paginatedItems,
+    totalPages,
+    currentPage: page,
+    totalItems: items.length,
+  };
+}
+
+function formatChunks(chunks) {
+  return (
+    chunks?.map((chunk) => ({
+      id: chunk.id,
+      content: chunk.content.substring(0, 200) + "...",
+      metadata: chunk.metadata,
+      createdAt: chunk.created_at,
+    })) || []
+  );
+}
+
+export async function GET(request) {
   try {
-    const { data, error, count } = await supabase
+    const { searchParams } = new URL(request.url);
+    const searchQuery = searchParams.get("search") || "";
+    const page = parseInt(searchParams.get("page") || "1", 10);
+    const itemsPerPage = parseInt(searchParams.get("itemsPerPage") || "5", 10);
+    const userId = searchParams.get("userId");
+
+    let dbQuery = supabase
       .from("document_chunks")
       .select("*", { count: "exact" })
       .order("created_at", { ascending: false });
+
+    if (userId) {
+      dbQuery = dbQuery.eq("user_id", userId);
+    }
+
+    const { data, error, count } = await dbQuery;
 
     if (error) {
       return Response.json(
@@ -17,41 +93,19 @@ export async function GET() {
       );
     }
 
-    const groupedBySource = {};
-    const totalChunks = count || 0;
-
-    data?.forEach((chunk) => {
-      const source = chunk.metadata?.source || "unknown";
-      if (!groupedBySource[source]) {
-        groupedBySource[source] = {
-          source,
-          chunks: [],
-          totalChunks: 0,
-          category: chunk.metadata?.category || "N/A",
-          screen: chunk.metadata?.screen || "N/A",
-          createdAt: chunk.created_at,
-        };
-      }
-      groupedBySource[source].chunks.push({
-        id: chunk.id,
-        content: chunk.content.substring(0, 150) + "...",
-        similarity: null,
-      });
-      groupedBySource[source].totalChunks++;
-    });
-
-    const sources = Object.values(groupedBySource);
+    const sources = groupChunksBySource(data);
+    const filteredSources = filterSources(sources, searchQuery);
+    const pagination = paginate(filteredSources, page, itemsPerPage);
 
     return Response.json({
       success: true,
-      totalChunks,
-      sources,
-      chunks: data?.map((chunk) => ({
-        id: chunk.id,
-        content: chunk.content.substring(0, 200) + "...",
-        metadata: chunk.metadata,
-        createdAt: chunk.created_at,
-      })) || [],
+      totalChunks: count || 0,
+      sources: pagination.items,
+      totalSources: pagination.totalItems,
+      currentPage: pagination.currentPage,
+      totalPages: pagination.totalPages,
+      itemsPerPage,
+      chunks: formatChunks(data),
     });
   } catch (error) {
     return Response.json(
@@ -63,4 +117,3 @@ export async function GET() {
     );
   }
 }
-
