@@ -12,8 +12,8 @@ graph TB
     Admin[Admin] --> AdminUI[Admin Panel]
     Website[External Website] --> EmbedWidget[Embed Widget]
 
-    ChatUI --> ChatAPI[/api/chat]
-    AdminUI --> IngestAPI[/api/ingest]
+    ChatUI --> ChatAPI[Chat API]
+    AdminUI --> IngestAPI[Ingest API]
     EmbedWidget --> ChatAPI
 
     ChatAPI --> RAGEngine[RAG Engine]
