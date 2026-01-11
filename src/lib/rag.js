@@ -1,68 +1,62 @@
-import { similaritySearch } from "./vectorStore";
-import { generateResponse } from "./llm";
+import { similaritySearch } from "./vectorStore.js";
+import { generateResponse } from "./llm.js";
 
-import { EMBEDDING_PROVIDER } from "./embeddings";
-
-function isGreeting(query) {
-  const greetingPatterns = [
-    /^hi\s*$/i,
-    /^hello\s*$/i,
-    /^hey\s*$/i,
-    /^greetings\s*$/i,
-    /^good\s+(morning|afternoon|evening)\s*$/i,
-  ];
-
-  const normalizedQuery = query.trim().toLowerCase();
-  return greetingPatterns.some((pattern) => pattern.test(normalizedQuery));
+function isGreeting(text) {
+  return /^(hi|hello|hey|good morning|good evening)$/i.test(text.trim());
 }
 
 export async function generateRAGResponse(query, options = {}) {
   const {
     provider = "openai",
-    limit = 5,
-    threshold = 0.3,
-    metadataFilter = {},
-    embeddingProvider = EMBEDDING_PROVIDER,
+    embeddingProvider,
+    metadataFilter = { module: "sales-history-review" },
   } = options;
 
   if (isGreeting(query)) {
     return {
-      answer:
-        "Hi! How may I help you today? I can answer questions about your products and services based on the information you've provided.",
+      answer: "Hello. How can I help you with Sales History Review?",
       chunks: [],
-      provider,
     };
   }
 
-  console.log(`[RAG] Searching for: "${query}" with threshold: ${threshold}`);
-
-  const retrievedChunks = await similaritySearch(query, {
-    limit,
-    threshold,
+  let retrieved = await similaritySearch(query, {
+    limit: 10,
+    threshold: 0.1,
     metadataFilter,
     embeddingProvider,
   });
 
-  console.log(`[RAG] Retrieved ${retrievedChunks.length} chunks`);
+  console.log(`[RAG] Query: "${query}", Retrieved chunks: ${retrieved.length}`);
 
-  if (retrievedChunks.length === 0) {
-    return {
-      answer:
-        "I'm here to help! However, I couldn't find specific information about that in the provided content. Could you please rephrase your question or provide more details? If you're looking for something specific, try asking about features, functionality, or processes that might be documented in the system.",
-      chunks: [],
-      provider,
-    };
+  if (retrieved.length === 0) {
+    console.log(`[RAG] No chunks found with metadata filter, trying without filter...`);
+    retrieved = await similaritySearch(query, {
+      limit: 10,
+      threshold: 0.1,
+      metadataFilter: {},
+      embeddingProvider,
+    });
+    console.log(`[RAG] Retrieved ${retrieved.length} chunks without filter`);
   }
 
-  const answer = await generateResponse(provider, retrievedChunks, query);
+  if (retrieved.length === 0) {
+    console.log(`[RAG] Still no chunks, trying with even lower threshold...`);
+    retrieved = await similaritySearch(query, {
+      limit: 15,
+      threshold: 0.05,
+      metadataFilter: {},
+      embeddingProvider,
+    });
+    console.log(`[RAG] Retrieved ${retrieved.length} chunks with threshold 0.05`);
+  }
+
+  const answer = await generateResponse(provider, retrieved, query);
 
   return {
     answer,
-    chunks: retrievedChunks.map((chunk) => ({
-      content: chunk.content.substring(0, 200) + "...",
-      similarity: chunk.similarity,
-      metadata: chunk.metadata,
+    chunks: retrieved.map((c) => ({
+      similarity: c.similarity,
+      metadata: c.metadata,
     })),
-    provider,
   };
 }

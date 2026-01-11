@@ -1,54 +1,40 @@
-const DEFAULT_CHUNK_SIZE = 1000;
-const DEFAULT_CHUNK_OVERLAP = 200;
+const DEFAULT_CHUNK_SIZE = 900;
+const DEFAULT_CHUNK_OVERLAP = 150;
 
-function splitTextRecursively(text, chunkSize, chunkOverlap, separators) {
+export function cleanText(text) {
+  return text
+    .replace(/\r/g, "")
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
+function splitByParagraphs(text, chunkSize, chunkOverlap) {
+  const paragraphs = text.split("\n\n");
   const chunks = [];
 
-  if (text.length <= chunkSize) {
-    return [text];
-  }
+  let current = "";
 
-  for (const separator of separators) {
-    if (separator === "") {
-      const remaining = text;
-      let start = 0;
-      while (start < remaining.length) {
-        const end = Math.min(start + chunkSize, remaining.length);
-        chunks.push(remaining.slice(start, end));
-        start = end - chunkOverlap;
-        if (start >= remaining.length) break;
+  for (const para of paragraphs) {
+    if ((current + "\n\n" + para).length > chunkSize) {
+      if (current) {
+        chunks.push(current.trim());
+        const overlap = current.slice(-chunkOverlap);
+        current = overlap + "\n\n" + para;
+      } else {
+        chunks.push(para.trim());
+        current = "";
       }
-      break;
-    }
-
-    const splits = text.split(separator);
-    if (splits.length > 1) {
-      let currentChunk = "";
-
-      for (let i = 0; i < splits.length; i++) {
-        const part = splits[i];
-        const testChunk = currentChunk ? currentChunk + separator + part : part;
-
-        if (testChunk.length > chunkSize && currentChunk) {
-          chunks.push(currentChunk);
-          const overlapText = currentChunk.slice(-chunkOverlap);
-          currentChunk = overlapText + separator + part;
-        } else {
-          currentChunk = testChunk;
-        }
-      }
-
-      if (currentChunk) {
-        chunks.push(currentChunk);
-      }
-
-      if (chunks.length > 0) {
-        break;
-      }
+    } else {
+      current += (current ? "\n\n" : "") + para;
     }
   }
 
-  return chunks.length > 0 ? chunks : [text];
+  if (current.trim()) {
+    chunks.push(current.trim());
+  }
+
+  return chunks;
 }
 
 export async function chunkText(text, options = {}) {
@@ -59,27 +45,14 @@ export async function chunkText(text, options = {}) {
   } = options;
 
   const cleanedText = cleanText(text);
-  const separators = ["\n\n", "\n", ". ", " ", ""];
-  const chunks = splitTextRecursively(
-    cleanedText,
-    chunkSize,
-    chunkOverlap,
-    separators
-  );
+  const chunks = splitByParagraphs(cleanedText, chunkSize, chunkOverlap);
 
   return chunks.map((chunk, index) => ({
-    content: chunk.trim(),
+    content: chunk,
     metadata: {
       ...metadata,
       chunkIndex: index,
       totalChunks: chunks.length,
     },
   }));
-}
-
-export function cleanText(text) {
-  return text
-    .replace(/\s+/g, " ")
-    .replace(/\n{3,}/g, "\n\n")
-    .trim();
 }
