@@ -1,6 +1,6 @@
 # KnowledgeBase AI
 
-![GitHub stars](https://img.shields.io/github/stars/The-Atul-Sharma/KnowledgeBase-ai?style=social) ![GitHub forks](https://img.shields.io/github/forks/The-Atul-Sharma/KnowledgeBase-ai?style=social) ![GitHub issues](https://img.shields.io/github/issues/The-Atul-Sharma/KnowledgeBase-ai) ![GitHub license](https://img.shields.io/github/license/The-Atul-Sharma/KnowledgeBase-ai) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+[![GitHub stars](https://img.shields.io/github/stars/The-Atul-Sharma/KnowledgeBase-ai?style=flat-square&logo=github)](https://github.com/The-Atul-Sharma/KnowledgeBase-ai) [![GitHub forks](https://img.shields.io/github/forks/The-Atul-Sharma/KnowledgeBase-ai?style=flat-square&logo=github)](https://github.com/The-Atul-Sharma/KnowledgeBase-ai) [![GitHub issues](https://img.shields.io/github/issues/The-Atul-Sharma/KnowledgeBase-ai?style=flat-square&logo=github)](https://github.com/The-Atul-Sharma/KnowledgeBase-ai/issues) [![GitHub license](https://img.shields.io/github/license/The-Atul-Sharma/KnowledgeBase-ai?style=flat-square)](https://github.com/The-Atul-Sharma/KnowledgeBase-ai/blob/main/LICENCE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/The-Atul-Sharma/KnowledgeBase-ai/pulls)
 
 An AI-powered chatbot that answers questions about your products using RAG (Retrieval-Augmented Generation). Upload your product content, and the chatbot will provide accurate answers based on your knowledge base.
 
