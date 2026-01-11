@@ -1,6 +1,6 @@
 # KnowledgeBase AI
 
-![GitHub stars](https://img.shields.io/github/stars/your-org/productmind-ai?style=social) ![GitHub forks](https://img.shields.io/github/forks/your-org/productmind-ai?style=social) ![GitHub issues](https://img.shields.io/github/issues/your-org/productmind-ai) ![GitHub license](https://img.shields.io/github/license/your-org/productmind-ai) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+![GitHub stars](https://img.shields.io/github/stars/The-Atul-Sharma/KnowledgeBase-ai?style=social) ![GitHub forks](https://img.shields.io/github/forks/The-Atul-Sharma/KnowledgeBase-ai?style=social) ![GitHub issues](https://img.shields.io/github/issues/The-Atul-Sharma/KnowledgeBase-ai) ![GitHub license](https://img.shields.io/github/license/The-Atul-Sharma/KnowledgeBase-ai) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 An AI-powered chatbot that answers questions about your products using RAG (Retrieval-Augmented Generation). Upload your product content, and the chatbot will provide accurate answers based on your knowledge base.
 
