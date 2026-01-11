@@ -12,7 +12,7 @@ const features = [
     ),
     title: "RAG-Powered Accuracy",
     description:
-      "ProductMind AI uses Retrieval-Augmented Generation to ensure responses are grounded in your actual documentation—no hallucinations, no generic answers.",
+      "KnowledgeBase AI uses Retrieval-Augmented Generation to ensure responses are grounded in your actual documentation—no hallucinations, no generic answers.",
     iconBg: "bg-blue-900",
     iconColor: "text-blue-400",
   },
@@ -57,4 +57,3 @@ export default function FeatureCards() {
     </div>
   );
 }
-

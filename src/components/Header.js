@@ -14,10 +14,12 @@ export default function Header({
         <div className="flex justify-between items-center py-4">
           <div className="flex items-center">
             {showAuth ? (
-              <h1 className="text-2xl font-bold text-white">ProductMind AI</h1>
+              <h1 className="text-2xl font-bold text-white">
+                KnowledgeBase AI
+              </h1>
             ) : (
               <Link href="/" className="text-2xl font-bold text-white">
-                ProductMind AI
+                KnowledgeBase AI
               </Link>
             )}
           </div>
