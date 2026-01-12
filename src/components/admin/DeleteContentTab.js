@@ -27,8 +27,8 @@ export default function DeleteContentTab({
         <div className="space-y-4">
           <div className="flex items-center justify-between mb-4">
             <div className="text-sm text-gray-600 dark:text-gray-400">
-              Total: {sources.reduce((sum, s) => sum + s.totalChunks, 0)}{" "}
-              chunks across {totalSources} source(s)
+              Total: {sources.reduce((sum, s) => sum + s.totalChunks, 0)} chunks
+              across {totalSources} source(s)
             </div>
             <div className="flex-1 max-w-md ml-4">
               <input
@@ -84,7 +84,7 @@ export default function DeleteContentTab({
                     <button
                       onClick={() => handleDelete(sourceItem.source)}
                       disabled={loading}
-                      className="ml-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
+                      className="ml-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm cursor-pointer"
                     >
                       Delete
                     </button>
@@ -137,9 +137,7 @@ export default function DeleteContentTab({
                     </div>
                     <button
                       onClick={() =>
-                        setCurrentPage((prev) =>
-                          Math.min(totalPages, prev + 1)
-                        )
+                        setCurrentPage((prev) => Math.min(totalPages, prev + 1))
                       }
                       disabled={currentPage === totalPages}
                       className="px-3 py-1 border border-gray-300 dark:border-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm"
@@ -156,4 +154,3 @@ export default function DeleteContentTab({
     </section>
   );
 }
-

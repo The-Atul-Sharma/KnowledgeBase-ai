@@ -11,15 +11,8 @@ export default function HeroSection({ loading, user }) {
           </h1>
           <p className="max-w-2xl mb-6 font-light text-gray-400 lg:mb-8 md:text-lg lg:text-xl">
             Build intelligent chatbots that deliver accurate, contextual answers
-            directly from your product documentation using{" "}
-            <a href="#" className="hover:underline">
-              Retrieval-Augmented Generation (RAG)
-            </a>
-            . Powered by{" "}
-            <a href="https://tailwindcss.com" className="hover:underline">
-              Tailwind CSS
-            </a>{" "}
-            and modern AI technologies.
+            directly from your product documentation using Retrieval-Augmented
+            Generation (RAG)
           </p>
           <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
             {loading ? (

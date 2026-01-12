@@ -1,27 +1,27 @@
 const features = [
   {
-    title: "Vector Search:",
+    title: "Vector Search",
     description:
       "Semantic search powered by embeddings for highly accurate content retrieval.",
   },
   {
-    title: "Multiple LLM Support:",
+    title: "Multiple LLM Support",
     description:
-      "Works with OpenAI GPT models or local Ollama models (Llama 3.1, Qwen 3, etc.).",
+      "Works with OpenAI GPT models or local Ollama models (Llama 3.1, Qwen 3, etc.)",
   },
   {
-    title: "Flexible Embedding Options:",
+    title: "Flexible Embedding Options",
     description:
-      "Use OpenAI embeddings or local Ollama nomic-embed-text for on-premise processing.",
+      "Use OpenAI embeddings or local Ollama nomic-embed-text for on-premise processing",
   },
   {
-    title: "Secure User Authentication:",
-    description: "Built-in login and registration using Supabase Auth.",
+    title: "Secure User Authentication",
+    description: "Built-in login and registration using Supabase Auth",
   },
   {
     title: "Per-User Configuration:",
     description:
-      "Each user can customize their own LLM and embedding providers independently.",
+      "Each user can customize their own LLM and embedding providers independently",
   },
 ];
 
@@ -30,14 +30,13 @@ export default function KeyFeatures() {
     <section id="features" className="bg-gray-900">
       <div className="items-center max-w-screen-xl px-4 py-8 mx-auto lg:grid lg:grid-cols-4 lg:gap-16 xl:gap-24 lg:py-24 lg:px-6">
         <div className="col-span-2 mb-8">
-          <p className="text-lg font-medium text-purple-500">
-            Key Features
-          </p>
+          <p className="text-lg font-medium text-purple-500">Key Features</p>
           <h2 className="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-white md:text-3xl">
             Powerful features for intelligent chatbots
           </h2>
           <p className="font-light text-gray-400 sm:text-xl">
-            Build sophisticated AI chatbots with vector search, multiple LLM support, and flexible configuration options.
+            Build sophisticated AI chatbots with vector search, multiple LLM
+            support, and flexible configuration options.
           </p>
         </div>
         <div className="col-span-2 space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
@@ -58,9 +57,7 @@ export default function KeyFeatures() {
               <h3 className="mb-2 text-2xl font-bold text-white">
                 {feature.title}
               </h3>
-              <p className="font-light text-gray-400">
-                {feature.description}
-              </p>
+              <p className="font-light text-gray-400">{feature.description}</p>
             </div>
           ))}
         </div>
@@ -68,4 +65,3 @@ export default function KeyFeatures() {
     </section>
   );
 }
-
