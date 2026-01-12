@@ -373,6 +373,16 @@ export default function AdminPage() {
                 Add Content
               </button>
               <button
+                onClick={() => setActiveTab("scraper")}
+                className={`py-2 px-4 border-b-2 font-medium text-sm cursor-pointer ${
+                  activeTab === "scraper"
+                    ? "border-blue-500 text-blue-600 dark:text-blue-400"
+                    : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+                }`}
+              >
+                Scraper
+              </button>
+              <button
                 onClick={() => setActiveTab("delete")}
                 className={`py-2 px-4 border-b-2 font-medium text-sm cursor-pointer ${
                   activeTab === "delete"
@@ -411,16 +421,6 @@ export default function AdminPage() {
                 }`}
               >
                 Embed
-              </button>
-              <button
-                onClick={() => setActiveTab("scraper")}
-                className={`py-2 px-4 border-b-2 font-medium text-sm cursor-pointer ${
-                  activeTab === "scraper"
-                    ? "border-blue-500 text-blue-600 dark:text-blue-400"
-                    : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                }`}
-              >
-                Scraper
               </button>
             </nav>
           </div>
