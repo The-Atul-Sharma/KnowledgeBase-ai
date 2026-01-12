@@ -26,7 +26,7 @@ const EmailForm = ({ email, setEmail, loading, onSubmit }) => (
         type="email"
         autoComplete="email"
         required
-        className="appearance-none relative block w-full px-3 py-2 border border-gray-700 placeholder-gray-400 text-white bg-gray-800 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+        className="appearance-none relative block w-full px-3 py-2 border border-gray-700 placeholder-gray-400 text-white bg-gray-800 rounded-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm"
         placeholder="Email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -36,7 +36,7 @@ const EmailForm = ({ email, setEmail, loading, onSubmit }) => (
       <button
         type="submit"
         disabled={loading}
-        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50"
       >
         {loading ? "Sending OTP..." : "Send OTP"}
       </button>
@@ -56,7 +56,7 @@ const OTPForm = ({ email, otp, setOtp, loading, onVerify, onResetEmail }) => (
         type="text"
         required
         maxLength={6}
-        className="appearance-none relative block w-full px-3 py-2 border border-gray-700 placeholder-gray-400 text-white bg-gray-800 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm text-center text-2xl tracking-widest"
+        className="appearance-none relative block w-full px-3 py-2 border border-gray-700 placeholder-gray-400 text-white bg-gray-800 rounded-md focus:outline-none focus:ring-purple-500 focus:border-purple-500 focus:z-10 sm:text-sm text-center text-2xl tracking-widest"
         placeholder="000000"
         value={otp}
         onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
@@ -76,7 +76,7 @@ const OTPForm = ({ email, otp, setOtp, loading, onVerify, onResetEmail }) => (
       <button
         type="submit"
         disabled={loading || otp.length !== 6}
-        className="flex-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+        className="flex-1 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 disabled:opacity-50"
       >
         {loading ? "Verifying..." : "Verify OTP"}
       </button>
@@ -187,8 +187,8 @@ export default function LoginPage() {
   } = useOTPAuth();
 
   return (
-    <div className="min-h-screen bg-black">
-      <Header />
+    <div className="min-h-screen bg-gray-900">
+      <Header hideFeatures={true} hideHome={true} />
       <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>

@@ -342,7 +342,7 @@ export default function AdminPage() {
                 href="/"
                 className="text-blue-500 hover:text-blue-600 underline text-sm"
               >
-                ← Back to Chat
+                ← Back to Home
               </Link>
             </div>
           </div>
@@ -363,7 +363,7 @@ export default function AdminPage() {
             <nav className="flex space-x-4">
               <button
                 onClick={() => setActiveTab("add")}
-                className={`py-2 px-4 border-b-2 font-medium text-sm ${
+                className={`py-2 px-4 border-b-2 font-medium text-sm cursor-pointer ${
                   activeTab === "add"
                     ? "border-blue-500 text-blue-600 dark:text-blue-400"
                     : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -373,7 +373,7 @@ export default function AdminPage() {
               </button>
               <button
                 onClick={() => setActiveTab("delete")}
-                className={`py-2 px-4 border-b-2 font-medium text-sm ${
+                className={`py-2 px-4 border-b-2 font-medium text-sm cursor-pointer ${
                   activeTab === "delete"
                     ? "border-blue-500 text-blue-600 dark:text-blue-400"
                     : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -383,7 +383,7 @@ export default function AdminPage() {
               </button>
               <button
                 onClick={() => setActiveTab("settings")}
-                className={`py-2 px-4 border-b-2 font-medium text-sm ${
+                className={`py-2 px-4 border-b-2 font-medium text-sm cursor-pointer ${
                   activeTab === "settings"
                     ? "border-blue-500 text-blue-600 dark:text-blue-400"
                     : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -393,7 +393,7 @@ export default function AdminPage() {
               </button>
               <button
                 onClick={() => setActiveTab("customization")}
-                className={`py-2 px-4 border-b-2 font-medium text-sm ${
+                className={`py-2 px-4 border-b-2 font-medium text-sm cursor-pointer ${
                   activeTab === "customization"
                     ? "border-blue-500 text-blue-600 dark:text-blue-400"
                     : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
@@ -403,7 +403,7 @@ export default function AdminPage() {
               </button>
               <button
                 onClick={() => setActiveTab("embed")}
-                className={`py-2 px-4 border-b-2 font-medium text-sm ${
+                className={`py-2 px-4 border-b-2 font-medium text-sm cursor-pointer ${
                   activeTab === "embed"
                     ? "border-blue-500 text-blue-600 dark:text-blue-400"
                     : "border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"

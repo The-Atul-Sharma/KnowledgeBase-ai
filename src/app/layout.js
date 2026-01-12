@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ChatWidget from "@/components/ChatWidget";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { ChatWidgetProvider } from "@/contexts/ChatWidgetContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,8 +26,10 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased dark:bg-black`}
       >
         <ErrorBoundary>
-          {children}
-          <ChatWidget />
+          <ChatWidgetProvider>
+            {children}
+            <ChatWidget />
+          </ChatWidgetProvider>
         </ErrorBoundary>
       </body>
     </html>

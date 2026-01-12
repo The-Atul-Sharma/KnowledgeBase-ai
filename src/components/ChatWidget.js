@@ -1,15 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useWidgetSetup } from "@/hooks/useWidgetSetup";
 import { useChatWidget } from "@/hooks/useChatWidget";
+import { useChatWidgetContext } from "@/contexts/ChatWidgetContext";
 import WidgetToggle from "./ChatWidget/WidgetToggle";
 import WidgetHeader from "./ChatWidget/WidgetHeader";
 import WidgetMessages from "./ChatWidget/WidgetMessages";
 import WidgetInput from "./ChatWidget/WidgetInput";
 
 export default function ChatWidget() {
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, setIsOpen } = useChatWidgetContext();
   const { isSetupComplete, checkingSetup, userId, customization } =
     useWidgetSetup();
   const {

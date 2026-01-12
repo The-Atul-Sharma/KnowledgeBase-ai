@@ -25,34 +25,47 @@ const features = [
   },
 ];
 
-const CheckIcon = () => (
-  <path
-    fillRule="evenodd"
-    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-    clipRule="evenodd"
-  />
-);
-
 export default function KeyFeatures() {
   return (
-    <div className="bg-gray-900 p-8 rounded-lg shadow-lg border border-gray-800">
-      <h3 className="text-2xl font-semibold text-white mb-4">Key Features</h3>
-      <ul className="space-y-3 text-gray-400">
-        {features.map((feature, index) => (
-          <li key={index} className="flex items-start">
-            <svg
-              className="w-5 h-5 text-green-500 mr-2 mt-0.5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <CheckIcon />
-            </svg>
-            <span>
-              <strong>{feature.title}</strong> {feature.description}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <section id="features" className="bg-gray-900">
+      <div className="items-center max-w-screen-xl px-4 py-8 mx-auto lg:grid lg:grid-cols-4 lg:gap-16 xl:gap-24 lg:py-24 lg:px-6">
+        <div className="col-span-2 mb-8">
+          <p className="text-lg font-medium text-purple-500">
+            Key Features
+          </p>
+          <h2 className="mt-3 mb-4 text-3xl font-extrabold tracking-tight text-white md:text-3xl">
+            Powerful features for intelligent chatbots
+          </h2>
+          <p className="font-light text-gray-400 sm:text-xl">
+            Build sophisticated AI chatbots with vector search, multiple LLM support, and flexible configuration options.
+          </p>
+        </div>
+        <div className="col-span-2 space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
+          {features.map((feature, index) => (
+            <div key={index}>
+              <svg
+                className="w-10 h-10 mb-2 text-purple-500 md:w-12 md:h-12"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              <h3 className="mb-2 text-2xl font-bold text-white">
+                {feature.title}
+              </h3>
+              <p className="font-light text-gray-400">
+                {feature.description}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
+

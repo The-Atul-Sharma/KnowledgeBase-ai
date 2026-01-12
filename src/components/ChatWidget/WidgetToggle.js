@@ -4,7 +4,7 @@ export default function WidgetToggle({ onOpen }) {
   return (
     <button
       onClick={onOpen}
-      className="fixed bottom-6 right-6 w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-50"
+      className="fixed bottom-6 right-6 w-14 h-14 bg-blue-500 hover:bg-blue-600 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110 z-50 cursor-pointer"
       aria-label="Open chat"
     >
       <svg
@@ -23,4 +23,3 @@ export default function WidgetToggle({ onOpen }) {
     </button>
   );
 }
-

@@ -5,8 +5,9 @@ import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
-import FeatureCards from "@/components/FeatureCards";
+import FeaturesSection from "@/components/FeaturesSection";
 import KeyFeatures from "@/components/KeyFeatures";
+import CTASection from "@/components/CTASection";
 
 export default function Home() {
   const { user, loading } = useAuth();
@@ -19,7 +20,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-gray-900">
       <Header
         showAuth={true}
         user={user}
@@ -27,10 +28,11 @@ export default function Home() {
         onLogout={handleLogout}
       />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <main>
         <HeroSection loading={loading} user={user} />
-        <FeatureCards />
+        <FeaturesSection />
         <KeyFeatures />
+        <CTASection loading={loading} user={user} />
       </main>
     </div>
   );
