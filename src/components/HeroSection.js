@@ -85,6 +85,7 @@ export default function HeroSection({ loading, user }) {
             height={400}
             className="w-full h-96 object-cover rounded-lg"
             priority
+            fetchPriority="high"
           />
         </div>
       </div>
