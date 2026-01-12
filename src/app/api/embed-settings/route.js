@@ -11,6 +11,7 @@ const EMBED_SETTINGS_FIELDS = [
   "no_response_text",
   "input_placeholder",
   "header_color",
+  "header_text_color",
   "response_card_color",
   "response_text_color",
   "response_metadata_color",

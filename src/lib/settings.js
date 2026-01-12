@@ -42,6 +42,7 @@ export async function getSettings(userId) {
       no_response_text: data.no_response_text || defaults.no_response_text,
       input_placeholder: data.input_placeholder || defaults.input_placeholder,
       header_color: data.header_color || defaults.header_color,
+      header_text_color: data.header_text_color || defaults.header_text_color,
       response_card_color:
         data.response_card_color || defaults.response_card_color,
       response_text_color:

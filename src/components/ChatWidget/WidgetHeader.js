@@ -10,7 +10,8 @@ export default function WidgetHeader({ customization, onClose }) {
       style={{
         backgroundColor:
           customization.header_color || DEFAULT_SETTINGS.header_color,
-        color: "#ffffff",
+        color:
+          customization.header_text_color || DEFAULT_SETTINGS.header_text_color,
       }}
     >
       <div className="flex items-center gap-2">

@@ -16,7 +16,9 @@ export default function CustomizationTab({
     <section>
       <h2 className="text-xl font-semibold mb-4">Chatbot Customization</h2>
       {loadingSettings ? (
-        <div className="text-center py-8 text-gray-500">Loading settings...</div>
+        <div className="text-center py-8 text-gray-500">
+          Loading settings...
+        </div>
       ) : (
         <form onSubmit={handleSaveSettings} className="space-y-6">
           <div>
@@ -162,6 +164,22 @@ export default function CustomizationTab({
 
             <div className="grid grid-cols-2 gap-4">
               <ColorInput
+                label="Chatbot icon background"
+                value={settings.chatbot_icon_bg_color || "#3b82f6"}
+                onChange={(value) =>
+                  setSettings({ ...settings, chatbot_icon_bg_color: value })
+                }
+                error={colorErrors.chatbot_icon_bg_color}
+                placeholder="#3b82f6"
+                onColorChange={(error) =>
+                  setColorErrors({
+                    ...colorErrors,
+                    chatbot_icon_bg_color: error,
+                  })
+                }
+              />
+
+              <ColorInput
                 label="Header background"
                 value={settings.header_color || "#3b82f6"}
                 onChange={(value) =>
@@ -171,6 +189,48 @@ export default function CustomizationTab({
                 placeholder="#3b82f6"
                 onColorChange={(error) =>
                   setColorErrors({ ...colorErrors, header_color: error })
+                }
+              />
+
+              <ColorInput
+                label="Header text"
+                value={settings.header_text_color || "#ffffff"}
+                onChange={(value) =>
+                  setSettings({ ...settings, header_text_color: value })
+                }
+                error={colorErrors.header_text_color}
+                placeholder="#ffffff"
+                onColorChange={(error) =>
+                  setColorErrors({ ...colorErrors, header_text_color: error })
+                }
+              />
+
+              <ColorInput
+                label="Close icon"
+                value={settings.close_icon_color || "#ffffff"}
+                onChange={(value) =>
+                  setSettings({ ...settings, close_icon_color: value })
+                }
+                error={colorErrors.close_icon_color}
+                placeholder="#ffffff"
+                onColorChange={(error) =>
+                  setColorErrors({ ...colorErrors, close_icon_color: error })
+                }
+              />
+
+              <ColorInput
+                label="Close icon background"
+                value={settings.close_icon_bg_color || "#cccccc"}
+                onChange={(value) =>
+                  setSettings({ ...settings, close_icon_bg_color: value })
+                }
+                error={colorErrors.close_icon_bg_color}
+                placeholder="#cccccc"
+                onColorChange={(error) =>
+                  setColorErrors({
+                    ...colorErrors,
+                    close_icon_bg_color: error,
+                  })
                 }
               />
 
@@ -243,51 +303,6 @@ export default function CustomizationTab({
               />
 
               <ColorInput
-                label="Close icon"
-                value={settings.close_icon_color || "#ffffff"}
-                onChange={(value) =>
-                  setSettings({ ...settings, close_icon_color: value })
-                }
-                error={colorErrors.close_icon_color}
-                placeholder="#ffffff"
-                onColorChange={(error) =>
-                  setColorErrors({ ...colorErrors, close_icon_color: error })
-                }
-              />
-
-              <ColorInput
-                label="Close icon background"
-                value={settings.close_icon_bg_color || "#cccccc"}
-                onChange={(value) =>
-                  setSettings({ ...settings, close_icon_bg_color: value })
-                }
-                error={colorErrors.close_icon_bg_color}
-                placeholder="#cccccc"
-                onColorChange={(error) =>
-                  setColorErrors({
-                    ...colorErrors,
-                    close_icon_bg_color: error,
-                  })
-                }
-              />
-
-              <ColorInput
-                label="Chatbot background"
-                value={settings.chatbot_icon_bg_color || "#3b82f6"}
-                onChange={(value) =>
-                  setSettings({ ...settings, chatbot_icon_bg_color: value })
-                }
-                error={colorErrors.chatbot_icon_bg_color}
-                placeholder="#3b82f6"
-                onColorChange={(error) =>
-                  setColorErrors({
-                    ...colorErrors,
-                    chatbot_icon_bg_color: error,
-                  })
-                }
-              />
-
-              <ColorInput
                 label="Send icon"
                 value={settings.send_icon_color || "#3b82f6"}
                 onChange={(value) =>
@@ -314,4 +329,3 @@ export default function CustomizationTab({
     </section>
   );
 }
-

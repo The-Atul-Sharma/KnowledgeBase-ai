@@ -8,6 +8,7 @@ export const validateAllColors = (settings) => {
   const errors = {};
   const colorFields = [
     "header_color",
+    "header_text_color",
     "response_card_color",
     "response_text_color",
     "response_metadata_color",

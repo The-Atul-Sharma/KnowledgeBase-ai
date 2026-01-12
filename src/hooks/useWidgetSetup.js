@@ -14,6 +14,7 @@ export function useWidgetSetup() {
     no_response_text: DEFAULT_SETTINGS.no_response_text,
     input_placeholder: DEFAULT_SETTINGS.input_placeholder,
     header_color: DEFAULT_SETTINGS.header_color,
+    header_text_color: DEFAULT_SETTINGS.header_text_color,
     response_card_color: DEFAULT_SETTINGS.response_card_color,
     response_text_color: DEFAULT_SETTINGS.response_text_color,
     response_metadata_color: DEFAULT_SETTINGS.response_metadata_color,
@@ -61,6 +62,8 @@ export function useWidgetSetup() {
           input_placeholder:
             settings.input_placeholder || DEFAULT_SETTINGS.input_placeholder,
           header_color: settings.header_color || DEFAULT_SETTINGS.header_color,
+          header_text_color:
+            settings.header_text_color || DEFAULT_SETTINGS.header_text_color,
           response_card_color:
             settings.response_card_color ||
             DEFAULT_SETTINGS.response_card_color,

@@ -156,6 +156,7 @@ CREATE TABLE IF NOT EXISTS app_settings (
   no_response_text TEXT DEFAULT 'I couldn''t find that in the current documentation, but I''m happy to help. Try rephrasing your question or asking about a specific feature.',
   input_placeholder TEXT DEFAULT 'Ask a question...',
   header_color TEXT DEFAULT '#3b82f6',
+  header_text_color TEXT DEFAULT '#ffffff',
   response_card_color TEXT DEFAULT '#ffffff',
   response_text_color TEXT DEFAULT '#111827',
   response_metadata_color TEXT DEFAULT '#6b7280',

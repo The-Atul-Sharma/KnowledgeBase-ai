@@ -237,6 +237,7 @@
 
   const DEFAULT_COLORS = {
     header: "#3b82f6",
+    headerText: "#ffffff",
     iconBg: "#3b82f6",
     closeIconBg: "#cccccc",
     closeIconColor: "#ffffff",
@@ -322,6 +323,8 @@
   function renderHeader(state) {
     const settings = state.settings;
     const headerColor = settings.header_color || DEFAULT_COLORS.header;
+    const headerTextColor =
+      settings.header_text_color || DEFAULT_COLORS.headerText;
     const iconBg = settings.chatbot_icon_bg_color || DEFAULT_COLORS.iconBg;
     const closeIconBg =
       settings.close_icon_bg_color || DEFAULT_COLORS.closeIconBg;
@@ -335,7 +338,7 @@
       : '<div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>';
 
     return `
-      <div class="chatbot-widget-header" style="background-color: ${headerColor}; color: white;">
+      <div class="chatbot-widget-header" style="background-color: ${headerColor}; color: ${headerTextColor};">
         <div class="chatbot-widget-header-content">
           ${iconHtml}
           <div class="chatbot-widget-title">${

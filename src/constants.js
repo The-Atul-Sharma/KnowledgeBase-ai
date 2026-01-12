@@ -15,6 +15,7 @@ export const DEFAULT_SETTINGS = {
     "I couldn't find that in the current documentation, but I'm happy to help. Try rephrasing your question or asking about a specific feature.",
   input_placeholder: "Ask a question...",
   header_color: "#3b82f6",
+  header_text_color: "#ffffff",
   response_card_color: "#ffffff",
   response_text_color: "#111827",
   response_metadata_color: "#6b7280",
