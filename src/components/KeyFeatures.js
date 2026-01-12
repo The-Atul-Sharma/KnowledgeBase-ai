@@ -1,8 +1,13 @@
 const features = [
   {
-    title: "Vector Search",
+    title: "Embeddable Widget",
     description:
-      "Semantic search powered by embeddings for highly accurate content retrieval.",
+      "Easy-to-embed chatbot widget with full customization options for colors, messages, and branding",
+  },
+  {
+    title: "Website Content Scraper",
+    description:
+      "Automatically scrape websites with configurable depth, clean text extraction, and selective page ingestion",
   },
   {
     title: "Multiple LLM Support",
@@ -15,14 +20,9 @@ const features = [
       "Use OpenAI embeddings or local Ollama nomic-embed-text for on-premise processing",
   },
   {
-    title: "Website Content Scraper",
+    title: "Vector Search",
     description:
-      "Automatically scrape websites with configurable depth, clean text extraction, and selective page ingestion",
-  },
-  {
-    title: "Embeddable Widget",
-    description:
-      "Easy-to-embed chatbot widget with full customization options for colors, messages, and branding",
+      "Semantic search powered by embeddings for highly accurate content retrieval.",
   },
   {
     title: "Secure User Authentication",

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function HeroSection({ loading, user }) {
   return (
@@ -77,9 +78,14 @@ export default function HeroSection({ loading, user }) {
           </div>
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-          <div className="w-full h-96 bg-gray-700 rounded-lg flex items-center justify-center">
-            <span className="text-gray-400">Hero Image</span>
-          </div>
+          <Image
+            src="/knowledgebase_ai_hero.jpg"
+            alt="AI-Powered Knowledge Base Assistant"
+            width={600}
+            height={400}
+            className="w-full h-96 object-cover rounded-lg"
+            priority
+          />
         </div>
       </div>
     </section>

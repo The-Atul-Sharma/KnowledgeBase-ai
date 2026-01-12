@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const CHECK_ICON = (
   <svg
     className="flex-shrink-0 w-5 h-5 text-purple-400"
@@ -15,36 +17,6 @@ const CHECK_ICON = (
 
 const features = [
   {
-    title: "RAG-Powered Accuracy",
-    description:
-      "KnowledgeBase AI uses Retrieval-Augmented Generation to ensure responses are grounded in your actual documentation—no hallucinations, no generic answers. Get accurate, contextual responses every time.",
-    features: [
-      "Vector search powered by embeddings",
-      "Multiple LLM support (OpenAI & Ollama)",
-      "Effortless content management",
-    ],
-    footer:
-      "Upload, organize, and manage your product documentation through a clean admin interface with fast and accurate vector search.",
-    imageText: "Feature Image 1",
-    imagePosition: "right",
-  },
-  {
-    title: "Flexible AI Providers",
-    description:
-      "Choose between OpenAI or local Ollama models for both LLMs and embeddings. Keep full control over your AI stack, costs, and data with complete flexibility.",
-    features: [
-      "Secure user authentication",
-      "Per-user configuration",
-      "Customizable widget embedding",
-      "Fast vector search with Supabase",
-      "Clean admin interface",
-    ],
-    footer:
-      "Each user can customize their own LLM and embedding providers independently for complete flexibility.",
-    imageText: "Feature Image 2",
-    imagePosition: "left",
-  },
-  {
     title: "Easy Widget Embedding",
     description:
       "Embed your chatbot widget seamlessly into any website with just a few lines of code. Fully customizable appearance, colors, and behavior to match your brand identity. Works on any website or platform without complex setup.",
@@ -57,7 +29,7 @@ const features = [
     ],
     footer:
       "Copy and paste the embed code from your admin panel to add the chatbot to any website instantly. The widget automatically adapts to your configured settings, colors, and branding.",
-    imageText: "Embed Widget",
+    imagePath: "/easy_widget_embedding.jpg",
     imagePosition: "right",
   },
   {
@@ -74,8 +46,38 @@ const features = [
     ],
     footer:
       "Easily import website content into your knowledge base by scraping pages and following links up to the configured depth. Select specific pages to ingest and organize them with custom titles. Perfect for documentation sites and knowledge bases.",
-    imageText: "Website Scraper",
+    imagePath: "/website_content_scraper.jpg",
     imagePosition: "left",
+  },
+  {
+    title: "Flexible AI Providers",
+    description:
+      "Choose between OpenAI or local Ollama models for both LLMs and embeddings. Keep full control over your AI stack, costs, and data with complete flexibility.",
+    features: [
+      "Secure user authentication",
+      "Per-user configuration",
+      "Customizable widget embedding",
+      "Fast vector search with Supabase",
+      "Clean admin interface",
+    ],
+    footer:
+      "Each user can customize their own LLM and embedding providers independently for complete flexibility.",
+    imagePath: "/flexible_ai_providers.jpg",
+    imagePosition: "left",
+  },
+  {
+    title: "RAG-Powered Accuracy",
+    description:
+      "KnowledgeBase AI uses Retrieval-Augmented Generation to ensure responses are grounded in your actual documentation—no hallucinations, no generic answers. Get accurate, contextual responses every time.",
+    features: [
+      "Vector search powered by embeddings",
+      "Multiple LLM support (OpenAI & Ollama)",
+      "Effortless content management",
+    ],
+    footer:
+      "Upload, organize, and manage your product documentation through a clean admin interface with fast and accurate vector search.",
+    imagePath: "/rag_powered_accuracy.jpg",
+    imagePosition: "right",
   },
 ];
 
@@ -97,9 +99,13 @@ function FeatureBlock({ feature }) {
     <div className="items-center gap-8 lg:grid lg:grid-cols-2 xl:gap-16">
       {isImageLeft && (
         <div className="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex">
-          <div className="w-full h-96 bg-gray-700 rounded-lg flex items-center justify-center">
-            <span className="text-gray-400">{feature.imageText}</span>
-          </div>
+          <Image
+            src={feature.imagePath}
+            alt={feature.title}
+            width={600}
+            height={400}
+            className="w-full h-96 object-cover rounded-lg"
+          />
         </div>
       )}
       <div className="text-gray-400 sm:text-lg">
@@ -127,9 +133,13 @@ function FeatureBlock({ feature }) {
       </div>
       {!isImageLeft && (
         <div className="hidden w-full mb-4 rounded-lg lg:mb-0 lg:flex">
-          <div className="w-full h-96 bg-gray-700 rounded-lg flex items-center justify-center">
-            <span className="text-gray-400">{feature.imageText}</span>
-          </div>
+          <Image
+            src={feature.imagePath}
+            alt={feature.title}
+            width={600}
+            height={400}
+            className="w-full h-96 object-cover rounded-lg"
+          />
         </div>
       )}
     </div>
