@@ -79,7 +79,7 @@ export default function HeroSection({ loading, user }) {
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
           <Image
-            src="/knowledgebase_ai_hero.jpg"
+            src="/assets/images/knowledgebase_ai_hero.jpg"
             alt="AI-Powered Knowledge Base Assistant"
             width={600}
             height={400}

@@ -29,7 +29,7 @@ const features = [
     ],
     footer:
       "Copy and paste the embed code from your admin panel to add the chatbot to any website instantly. The widget automatically adapts to your configured settings, colors, and branding.",
-    imagePath: "/easy_widget_embedding.jpg",
+    imagePath: "/assets/images/easy_widget_embedding.jpg",
     imagePosition: "right",
   },
   {
@@ -46,7 +46,7 @@ const features = [
     ],
     footer:
       "Easily import website content into your knowledge base by scraping pages and following links up to the configured depth. Select specific pages to ingest and organize them with custom titles. Perfect for documentation sites and knowledge bases.",
-    imagePath: "/website_content_scraper.jpg",
+    imagePath: "/assets/images/website_content_scraper.jpg",
     imagePosition: "left",
   },
   {
@@ -62,7 +62,7 @@ const features = [
     ],
     footer:
       "Each user can customize their own LLM and embedding providers independently for complete flexibility.",
-    imagePath: "/flexible_ai_providers.jpg",
+    imagePath: "/assets/images/flexible_ai_providers.jpg",
     imagePosition: "left",
   },
   {
@@ -76,7 +76,7 @@ const features = [
     ],
     footer:
       "Upload, organize, and manage your product documentation through a clean admin interface with fast and accurate vector search.",
-    imagePath: "/rag_powered_accuracy.jpg",
+    imagePath: "/assets/images/rag_powered_accuracy.jpg",
     imagePosition: "right",
   },
 ];
