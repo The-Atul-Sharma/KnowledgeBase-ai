@@ -25,4 +25,7 @@ export const DEFAULT_SETTINGS = {
   close_icon_bg_color: "#cccccc",
   chatbot_icon_bg_color: "#3b82f6",
   send_icon_color: "#3b82f6",
+  gemini_api_key: null,
+  gemini_model: "gemini-2.5-flash",
+  gemini_embedding_model: "text-embedding-004",
 };

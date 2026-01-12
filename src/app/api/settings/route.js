@@ -17,6 +17,7 @@ function maskSensitiveFields(settings) {
   return {
     ...settings,
     openai_api_key: settings.openai_api_key ? "***" : null,
+    gemini_api_key: settings.gemini_api_key ? "***" : null,
   };
 }
 
@@ -27,7 +28,7 @@ function buildSettingsData(userId, body, defaults) {
   };
 
   for (const key of SETTINGS_FIELDS) {
-    if (key === "openai_api_key") {
+    if (key === "openai_api_key" || key === "gemini_api_key") {
       if (body[key] !== undefined) {
         settingsData[key] = body[key] || null;
       }

@@ -12,12 +12,12 @@ const features = [
   {
     title: "Multiple LLM Support",
     description:
-      "Works with OpenAI GPT models or local Ollama models (Llama 3.1, Qwen 3, etc.)",
+      "Works with OpenAI GPT models, Google Gemini models, or local Ollama models (Llama 3.1, Qwen 3, etc.)",
   },
   {
     title: "Flexible Embedding Options",
     description:
-      "Use OpenAI embeddings or local Ollama nomic-embed-text for on-premise processing",
+      "Use OpenAI embeddings, Google Gemini embeddings, or local Ollama nomic-embed-text for on-premise processing",
   },
   {
     title: "Vector Search",

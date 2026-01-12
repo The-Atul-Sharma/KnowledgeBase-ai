@@ -8,8 +8,8 @@ An AI-powered chatbot that answers questions about your products using RAG (Retr
 
 - **RAG-powered**: Answers based on your uploaded content using Retrieval-Augmented Generation
 - **Vector Search**: Semantic search powered by embeddings for highly accurate content retrieval
-- **Multiple LLM Support**: Works with OpenAI GPT models or local Ollama models (Llama 3.1, Qwen 3, etc.)
-- **Flexible Embedding Options**: Use OpenAI embeddings or local Ollama nomic-embed-text for on-premise processing
+- **Multiple LLM Support**: Works with OpenAI GPT models, Google Gemini models, or local Ollama models (Llama 3.1, Qwen 3, etc.)
+- **Flexible Embedding Options**: Use OpenAI embeddings, Google Gemini embeddings, or local Ollama nomic-embed-text for on-premise processing
 - **Website Content Scraper**: Automatically scrape websites with configurable depth, clean text extraction, and selective page ingestion
 - **Embeddable Widget**: Easy-to-embed chatbot widget with full customization options for colors, messages, and branding
 - **Secure User Authentication**: Built-in login and registration using Supabase Auth
@@ -41,8 +41,10 @@ graph TB
 
     EmbeddingService --> OpenAI[OpenAI]
     EmbeddingService --> Ollama[Ollama]
+    EmbeddingService --> Gemini[Gemini]
     LLMService --> OpenAI
     LLMService --> Ollama
+    LLMService --> Gemini
 ```
 
 ## How It Works
@@ -97,6 +99,14 @@ ollama serve
 ollama pull llama3.2:3b-instruct-q4_K_M
 ollama pull nomic-embed-text
 ```
+
+**Gemini Setup (optional):**
+
+1. Get your API key from [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Configure Gemini API key in the admin settings panel
+3. Choose from available models:
+   - LLM: `gemini-2.5-flash` or `gemini-2.5-pro`
+   - Embeddings: `text-embedding-004` or `embedding-001`
 
 ## Database Setup
 
@@ -158,6 +168,9 @@ CREATE TABLE IF NOT EXISTS app_settings (
   llm_provider TEXT NOT NULL DEFAULT 'ollama',
   embedding_provider TEXT NOT NULL DEFAULT 'ollama',
   openai_api_key TEXT,
+  gemini_api_key TEXT,
+  gemini_model TEXT DEFAULT 'gemini-2.5-flash',
+  gemini_embedding_model TEXT DEFAULT 'text-embedding-004',
   ollama_api_url TEXT DEFAULT 'http://127.0.0.1:11434',
   ollama_model TEXT DEFAULT 'qwen3:4b-thinking-2507-q8_0',
   ollama_embedding_model TEXT DEFAULT 'nomic-embed-text',
@@ -194,7 +207,7 @@ CREATE INDEX IF NOT EXISTS app_settings_user_id_idx ON app_settings(user_id);
 - **RAG-powered**: Answers based on your uploaded content using Retrieval-Augmented Generation
 - **Multi-tenant**: Isolated content per user with secure authentication
 - **Vector Search**: Semantic search powered by embeddings for highly accurate content retrieval
-- **Flexible AI Providers**: Supports both OpenAI and local Ollama models for LLMs and embeddings
+- **Flexible AI Providers**: Supports OpenAI, Google Gemini, and local Ollama models for LLMs and embeddings
 - **Per-User Configuration**: Each user can customize their own LLM and embedding providers independently
 
 ### Content Management

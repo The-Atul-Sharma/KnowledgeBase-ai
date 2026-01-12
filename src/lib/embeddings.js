@@ -1,9 +1,12 @@
 import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const OPENAI_EMBEDDING_MODEL = "text-embedding-3-small";
 const OPENAI_EMBEDDING_DIMENSION = 1536;
 const OLLAMA_EMBEDDING_MODEL = "nomic-embed-text";
 const OLLAMA_EMBEDDING_DIMENSION = 768;
+const GEMINI_EMBEDDING_MODEL = "text-embedding-004";
+const GEMINI_EMBEDDING_DIMENSION = 768;
 
 async function generateOpenAIEmbedding(text, apiKey) {
   if (!apiKey) {
@@ -123,11 +126,41 @@ async function generateOllamaEmbedding(text, settings = {}) {
   }
 }
 
+async function generateGeminiEmbedding(
+  text,
+  apiKey,
+  modelName = GEMINI_EMBEDDING_MODEL
+) {
+  if (!apiKey) {
+    throw new Error("Gemini API key is not set");
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const model = genAI.getGenerativeModel({ model: modelName });
+
+  try {
+    const result = await model.embedContent(text);
+    const embedding = result.embedding;
+    return embedding.values;
+  } catch (error) {
+    console.error("Error generating Gemini embedding:", error);
+    throw new Error(`Failed to generate Gemini embedding: ${error.message}`);
+  }
+}
+
 export async function generateEmbedding(text, settings = {}) {
   const embeddingProvider = settings.embedding_provider || "ollama";
 
   if (embeddingProvider === "ollama") {
     return await generateOllamaEmbedding(text, settings);
+  }
+
+  if (embeddingProvider === "gemini") {
+    return await generateGeminiEmbedding(
+      text,
+      settings.gemini_api_key,
+      settings.gemini_embedding_model
+    );
   }
 
   return await generateOpenAIEmbedding(text, settings.openai_api_key);
@@ -141,6 +174,24 @@ export async function generateEmbeddings(texts, settings = {}) {
       texts.map((text) => generateOllamaEmbedding(text, settings))
     );
     return embeddings;
+  }
+
+  if (embeddingProvider === "gemini") {
+    if (!settings.gemini_api_key) {
+      throw new Error("Gemini API key is not set");
+    }
+    // Gemini has batch embedContent but handling individually for simplicity and consistency with current structure unless bulk is needed
+    // However, for efficiency, let's map it.
+    // Note: Gemini API has a rate limit, so batching might be better but sequential is safer for now without complex logic.
+    return await Promise.all(
+      texts.map((text) =>
+        generateGeminiEmbedding(
+          text,
+          settings.gemini_api_key,
+          settings.gemini_embedding_model
+        )
+      )
+    );
   }
 
   if (!settings.openai_api_key) {
@@ -167,9 +218,9 @@ export async function generateEmbeddings(texts, settings = {}) {
 
 export function getEmbeddingDimension(settings = {}) {
   const embeddingProvider = settings.embedding_provider || "ollama";
-  return embeddingProvider === "ollama"
-    ? OLLAMA_EMBEDDING_DIMENSION
-    : OPENAI_EMBEDDING_DIMENSION;
+  if (embeddingProvider === "ollama") return OLLAMA_EMBEDDING_DIMENSION;
+  if (embeddingProvider === "gemini") return GEMINI_EMBEDDING_DIMENSION;
+  return OPENAI_EMBEDDING_DIMENSION;
 }
 
 export {

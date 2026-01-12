@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export const GLOBAL_SYSTEM_PROMPT = `
 You are a friendly, helpful AI assistant for a business application.
@@ -47,7 +48,7 @@ function formatContext(chunks) {
 }
 
 function buildPrompt(context, question, customPrompt = null) {
-  const systemPrompt = customPrompt || STRICT_SYSTEM_PROMPT;
+  const systemPrompt = customPrompt || GLOBAL_SYSTEM_PROMPT;
   return `
 ${systemPrompt}
 
@@ -84,7 +85,24 @@ export async function generateResponse(
     return callOllama(prompt, settings);
   }
 
+  if (provider === "gemini") {
+    return callGemini(prompt, settings.gemini_api_key, settings.gemini_model);
+  }
+
   return callOpenAI(prompt, settings.openai_api_key);
+}
+
+async function callGemini(prompt, apiKey, modelName = "gemini-2.5-flash") {
+  if (!apiKey) {
+    throw new Error("Gemini API key is not set");
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey);
+  const model = genAI.getGenerativeModel({ model: modelName });
+
+  const result = await model.generateContent(prompt);
+  const response = await result.response;
+  return response.text().trim();
 }
 
 async function callOpenAI(prompt, apiKey) {

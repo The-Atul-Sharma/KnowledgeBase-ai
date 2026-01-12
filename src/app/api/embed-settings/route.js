@@ -34,6 +34,10 @@ function formatEmbedSettings(data, defaults) {
       trimValue(data.embedding_provider) || defaults.embedding_provider,
     ollama_api_url: trimValue(data.ollama_api_url) || defaults.ollama_api_url,
     openai_api_key: data.openai_api_key ? "***" : null,
+    gemini_api_key: data.gemini_api_key ? "***" : null,
+    gemini_model: trimValue(data.gemini_model) || defaults.gemini_model,
+    gemini_embedding_model:
+      trimValue(data.gemini_embedding_model) || defaults.gemini_embedding_model,
   };
 
   for (const key of EMBED_SETTINGS_FIELDS) {

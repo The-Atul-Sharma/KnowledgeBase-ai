@@ -34,6 +34,10 @@ export async function getSettings(userId) {
       ollama_embedding_model:
         data.ollama_embedding_model || defaults.ollama_embedding_model,
       openai_api_key: data.openai_api_key || defaults.openai_api_key,
+      gemini_api_key: data.gemini_api_key || defaults.gemini_api_key,
+      gemini_model: data.gemini_model || defaults.gemini_model,
+      gemini_embedding_model:
+        data.gemini_embedding_model || defaults.gemini_embedding_model,
       chatbot_name: data.chatbot_name || defaults.chatbot_name,
       header_title: data.header_title || defaults.header_title,
       icon_url: data.icon_url || defaults.icon_url,
@@ -76,6 +80,10 @@ export async function checkSetup(userId) {
   }
 
   if (settings.llm_provider === "ollama" && !settings.ollama_api_url) {
+    return false;
+  }
+
+  if (settings.llm_provider === "gemini" && !settings.gemini_api_key) {
     return false;
   }
 

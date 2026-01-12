@@ -52,16 +52,16 @@ const features = [
   {
     title: "Flexible AI Providers",
     description:
-      "Choose between OpenAI or local Ollama models for both LLMs and embeddings. Keep full control over your AI stack, costs, and data with complete flexibility.",
+      "Choose between OpenAI, Google Gemini, or local Ollama models for both LLMs and embeddings. Keep full control over your AI stack, costs, and data with complete flexibility.",
     features: [
-      "Secure user authentication",
-      "Per-user configuration",
-      "Customizable widget embedding",
-      "Fast vector search with Supabase",
-      "Clean admin interface",
+      "OpenAI GPT models support",
+      "Google Gemini 2.5 Flash & Pro models",
+      "Local Ollama models (Llama, Qwen, etc.)",
+      "Per-user provider configuration",
+      "Independent LLM and embedding selection",
     ],
     footer:
-      "Each user can customize their own LLM and embedding providers independently for complete flexibility.",
+      "Each user can customize their own LLM and embedding providers independently. Mix and match OpenAI, Gemini, or Ollama for maximum flexibility.",
     imagePath: "/assets/images/flexible_ai_providers.jpg",
     imagePosition: "left",
   },
@@ -71,7 +71,7 @@ const features = [
       "KnowledgeBase AI uses Retrieval-Augmented Generation to ensure responses are grounded in your actual documentation—no hallucinations, no generic answers. Get accurate, contextual responses every time.",
     features: [
       "Vector search powered by embeddings",
-      "Multiple LLM support (OpenAI & Ollama)",
+      "Multiple LLM support (OpenAI, Gemini & Ollama)",
       "Effortless content management",
     ],
     footer:

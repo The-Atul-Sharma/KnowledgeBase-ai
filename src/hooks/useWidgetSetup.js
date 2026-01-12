@@ -48,7 +48,8 @@ export function useWidgetSetup() {
         const settings = data.settings;
         const setupComplete =
           (settings.llm_provider === "openai" && settings.openai_api_key) ||
-          (settings.llm_provider === "ollama" && settings.ollama_api_url);
+          (settings.llm_provider === "ollama" && settings.ollama_api_url) ||
+          (settings.llm_provider === "gemini" && settings.gemini_api_key);
         setIsSetupComplete(setupComplete);
 
         setCustomization({

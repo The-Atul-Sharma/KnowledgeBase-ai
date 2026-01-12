@@ -32,6 +32,16 @@ export async function POST(request) {
       );
     }
 
+    if (provider === "gemini" && !settings.gemini_api_key) {
+      return Response.json(
+        {
+          success: false,
+          error: "Gemini API key not configured. Please configure it in admin settings.",
+        },
+        { status: 400 }
+      );
+    }
+
     const result = await generateRAGResponse(query, {
       provider,
       settings,
