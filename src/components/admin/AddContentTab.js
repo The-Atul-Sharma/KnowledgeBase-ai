@@ -18,7 +18,7 @@ export default function AddContentTab({
             type="text"
             value={source}
             onChange={(e) => setSource(e.target.value)}
-            placeholder="e.g., product-overview, screen-1"
+            placeholder="e.g., product-overview, documentation etc."
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800"
           />
         </div>
@@ -46,4 +46,3 @@ export default function AddContentTab({
     </section>
   );
 }
-

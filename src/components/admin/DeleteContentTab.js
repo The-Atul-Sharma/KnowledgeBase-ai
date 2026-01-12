@@ -38,7 +38,7 @@ export default function DeleteContentTab({
                   setSearchQuery(e.target.value);
                   setCurrentPage(1);
                 }}
-                placeholder="Search by source, category, or screen..."
+                placeholder="Search by title"
                 className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800"
               />
             </div>
