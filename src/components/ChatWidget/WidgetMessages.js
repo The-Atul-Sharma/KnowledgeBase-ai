@@ -40,33 +40,31 @@ export default function WidgetMessages({
 
   return (
     <>
-      {messages.length === 0 && (
-        <div className="flex justify-start">
+      <div className="flex justify-start">
+        <div
+          className="max-w-[80%] rounded-lg p-3 text-sm border border-gray-200 dark:border-gray-600"
+          style={{
+            backgroundColor: customization.response_card_color || DEFAULT_SETTINGS.response_card_color,
+            color: customization.response_text_color || DEFAULT_SETTINGS.response_text_color,
+          }}
+        >
+          <div className="whitespace-pre-wrap break-words">
+            {greetingMessage}
+          </div>
           <div
-            className="max-w-[80%] rounded-lg p-3 text-sm border border-gray-200 dark:border-gray-600"
+            className="text-xs mt-2 flex items-center gap-1"
             style={{
-              backgroundColor: customization.response_card_color || DEFAULT_SETTINGS.response_card_color,
-              color: customization.response_text_color || DEFAULT_SETTINGS.response_text_color,
+              color: customization.response_metadata_color || DEFAULT_SETTINGS.response_metadata_color,
             }}
           >
-            <div className="whitespace-pre-wrap break-words">
-              {greetingMessage}
-            </div>
-            <div
-              className="text-xs mt-2 flex items-center gap-1"
-              style={{
-                color: customization.response_metadata_color || DEFAULT_SETTINGS.response_metadata_color,
-              }}
-            >
-              <span>{customization.chatbot_name}</span>
-              <span>•</span>
-              <span>AI Agent</span>
-              <span>•</span>
-              <span>Just now</span>
-            </div>
+            <span>{customization.chatbot_name}</span>
+            <span>•</span>
+            <span>AI Agent</span>
+            <span>•</span>
+            <span>Just now</span>
           </div>
         </div>
-      )}
+      </div>
 
       {messages.map((message, index) => (
         <div

@@ -440,11 +440,8 @@
       return renderSetupMessage();
     }
 
-    if (state.messages.length === 0) {
-      return renderGreeting(state);
-    }
-
-    return state.messages
+    const greeting = renderGreeting(state);
+    const messages = state.messages
       .map((msg) => {
         if (msg.role === "user") {
           return renderUserMessage(msg, state.settings);
@@ -453,6 +450,8 @@
         }
       })
       .join("");
+
+    return greeting + messages;
   }
 
   function renderLoadingIndicator() {
