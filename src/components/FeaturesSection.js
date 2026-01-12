@@ -47,28 +47,33 @@ const features = [
   {
     title: "Easy Widget Embedding",
     description:
-      "Embed your chatbot widget seamlessly into any website with just a few lines of code. Fully customizable appearance, colors, and behavior to match your brand identity.",
+      "Embed your chatbot widget seamlessly into any website with just a few lines of code. Fully customizable appearance, colors, and behavior to match your brand identity. Works on any website or platform without complex setup.",
     features: [
       "Simple script tag integration",
       "Fully customizable colors and styling",
       "Works on any website or platform",
+      "Per-user widget configuration",
+      "Real-time customization preview",
     ],
     footer:
-      "Copy and paste the embed code from your admin panel to add the chatbot to any website instantly. No complex setup required.",
+      "Copy and paste the embed code from your admin panel to add the chatbot to any website instantly. The widget automatically adapts to your configured settings, colors, and branding.",
     imageText: "Embed Widget",
     imagePosition: "right",
   },
   {
     title: "Website Content Scraper",
     description:
-      "Automatically scrape and extract content from websites with configurable depth. Clean text extraction removes all HTML tags, scripts, and navigation elements for clean content ingestion.",
+      "Automatically scrape and extract content from websites with configurable depth. Clean text extraction removes all HTML tags, scripts, and navigation elements for clean content ingestion. Select specific pages and ingest them with custom titles.",
     features: [
       "Configurable scraping depth",
       "Clean text extraction (no HTML tags)",
       "Preview all scraped pages individually",
+      "Selective page ingestion with checkboxes",
+      "Pagination for large scrapes",
+      "Bulk ingest with custom titles",
     ],
     footer:
-      "Easily import website content into your knowledge base by scraping pages and following links up to the configured depth. Perfect for documentation sites and knowledge bases.",
+      "Easily import website content into your knowledge base by scraping pages and following links up to the configured depth. Select specific pages to ingest and organize them with custom titles. Perfect for documentation sites and knowledge bases.",
     imageText: "Website Scraper",
     imagePosition: "left",
   },

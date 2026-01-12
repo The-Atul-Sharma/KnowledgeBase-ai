@@ -15,13 +15,18 @@ const features = [
       "Use OpenAI embeddings or local Ollama nomic-embed-text for on-premise processing",
   },
   {
-    title: "Secure User Authentication",
-    description: "Built-in login and registration using Supabase Auth",
+    title: "Website Content Scraper",
+    description:
+      "Automatically scrape websites with configurable depth, clean text extraction, and selective page ingestion",
   },
   {
-    title: "Per-User Configuration:",
+    title: "Embeddable Widget",
     description:
-      "Each user can customize their own LLM and embedding providers independently",
+      "Easy-to-embed chatbot widget with full customization options for colors, messages, and branding",
+  },
+  {
+    title: "Secure User Authentication",
+    description: "Built-in login and registration using Supabase Auth",
   },
 ];
 
@@ -36,7 +41,8 @@ export default function KeyFeatures() {
           </h2>
           <p className="font-light text-gray-400 sm:text-xl">
             Build sophisticated AI chatbots with vector search, multiple LLM
-            support, and flexible configuration options.
+            support, website scraping, embeddable widgets, and flexible
+            configuration options.
           </p>
         </div>
         <div className="col-span-2 space-y-8 md:grid md:grid-cols-2 md:gap-12 md:space-y-0">
