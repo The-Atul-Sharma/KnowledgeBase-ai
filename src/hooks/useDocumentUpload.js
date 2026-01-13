@@ -6,14 +6,13 @@ import mammoth from "mammoth";
 const ALLOWED_FILE_TYPES = [
   "application/pdf",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "application/msword",
   "text/plain",
 ];
 
-const ALLOWED_EXTENSIONS = ["pdf", "docx", "doc", "txt"];
+const ALLOWED_EXTENSIONS = ["pdf", "docx", "txt"];
 
 const ERROR_MESSAGES = {
-  INVALID_TYPE: "Invalid file type. Please upload PDF, DOCX, DOC, or TXT files only.",
+  INVALID_TYPE: "Invalid file type. Please upload PDF, DOCX, or TXT files only.",
   EMPTY_DOCUMENT: "Document appears to be empty or could not be parsed",
   PARSE_FAILED: "Failed to read document",
 };
@@ -83,7 +82,6 @@ export function useDocumentUpload(source, setSource) {
       case "pdf":
         return await parsePDF(selectedFile);
       case "docx":
-      case "doc":
         return await parseDOCX(selectedFile);
       case "txt":
         return await parseTXT(selectedFile);

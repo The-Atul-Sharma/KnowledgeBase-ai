@@ -2,7 +2,7 @@
 
 import { useDocumentUpload } from "@/hooks/useDocumentUpload";
 
-const FILE_ACCEPT = ".pdf,.docx,.doc,.txt";
+const FILE_ACCEPT = ".pdf,.docx,.txt";
 const MAX_FILE_SIZE_MB = 10;
 
 const ERROR_MESSAGES = {
@@ -104,7 +104,7 @@ export default function AddDocumentTab({
                 Click to upload or drag and drop
               </span>
               <span className="text-xs text-gray-500 dark:text-gray-500 mt-1">
-                PDF, DOCX, DOC, or TXT (Max {MAX_FILE_SIZE_MB}MB)
+                PDF, DOCX, or TXT (Max {MAX_FILE_SIZE_MB}MB)
               </span>
             </label>
           </div>

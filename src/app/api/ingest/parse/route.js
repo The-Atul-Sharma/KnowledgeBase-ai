@@ -3,7 +3,6 @@ import mammoth from "mammoth";
 const SUPPORTED_EXTENSIONS = {
   pdf: "pdf",
   docx: "docx",
-  doc: "doc",
   txt: "txt",
 };
 
@@ -48,7 +47,6 @@ async function parseDocument(file, fileName) {
     case SUPPORTED_EXTENSIONS.pdf:
       return await parsePDF(buffer);
     case SUPPORTED_EXTENSIONS.docx:
-    case SUPPORTED_EXTENSIONS.doc:
       return await parseWord(buffer);
     case SUPPORTED_EXTENSIONS.txt:
       return await parseText(buffer);
