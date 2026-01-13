@@ -21,7 +21,7 @@ function maskSensitiveFields(settings) {
   };
 }
 
-function buildSettingsData(userId, body, defaults) {
+function buildSettingsData(userId, body, defaults, existingData = null) {
   const settingsData = {
     user_id: userId,
     updated_at: new Date().toISOString(),
@@ -30,7 +30,17 @@ function buildSettingsData(userId, body, defaults) {
   for (const key of SETTINGS_FIELDS) {
     if (key === "openai_api_key" || key === "gemini_api_key") {
       if (body[key] !== undefined) {
-        settingsData[key] = body[key] || null;
+        if (body[key] === "***" || body[key] === "") {
+          if (existingData && existingData[key]) {
+            settingsData[key] = existingData[key];
+          } else {
+            settingsData[key] = null;
+          }
+        } else {
+          settingsData[key] = body[key] || null;
+        }
+      } else if (existingData && existingData[key]) {
+        settingsData[key] = existingData[key];
       }
     } else if (body[key] !== undefined) {
       settingsData[key] = body[key] ?? defaults[key];
@@ -103,10 +113,17 @@ export async function POST(request) {
       );
     }
 
+    const { data: existingData } = await client
+      .from("app_settings")
+      .select("*")
+      .eq("user_id", userId)
+      .single();
+
     const settingsData = buildSettingsData(
       userId,
       settingsFields,
-      DEFAULT_SETTINGS
+      DEFAULT_SETTINGS,
+      existingData
     );
 
     const { data, error } = await client
