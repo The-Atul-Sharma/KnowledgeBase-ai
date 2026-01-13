@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useDocumentUpload } from "@/hooks/useDocumentUpload";
 
 const FILE_ACCEPT = ".pdf,.docx,.txt";
@@ -19,6 +20,7 @@ export default function AddDocumentTab({
   setSource,
   loading,
   handleDocumentUpload,
+  message,
 }) {
   const {
     file,
@@ -29,6 +31,20 @@ export default function AddDocumentTab({
     handleFileChange,
     resetFileState,
   } = useDocumentUpload(source, setSource);
+
+  useEffect(() => {
+    if (
+      message?.type === "success" &&
+      !loading &&
+      message?.text?.includes("ingested")
+    ) {
+      resetFileState();
+      const fileInput = document.getElementById("file-upload");
+      if (fileInput) {
+        fileInput.value = "";
+      }
+    }
+  }, [message, loading, resetFileState]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

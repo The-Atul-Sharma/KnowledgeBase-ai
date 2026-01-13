@@ -190,6 +190,7 @@ export default function AdminPage() {
               setSource={setDocumentSource}
               loading={loading}
               handleDocumentUpload={handleDocumentUpload}
+              message={message}
             />
           )}
 
