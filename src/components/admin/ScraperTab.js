@@ -1,9 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { useAuth } from "@/hooks/useAuth";
 
-export default function ScraperTab() {
+export default function ScraperTab({ user }) {
   const [url, setUrl] = useState("");
   const [depth, setDepth] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -18,7 +17,6 @@ export default function ScraperTab() {
   const [toast, setToast] = useState(null);
   const scrapedPagesRef = useRef(null);
   const selectAllCheckboxRef = useRef(null);
-  const { user } = useAuth();
 
   const handleScrape = async (e) => {
     e.preventDefault();

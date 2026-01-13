@@ -96,6 +96,8 @@ export function useDocumentUpload(source, setSource) {
     const selectedFile = e.target.files[0];
     if (!selectedFile) return;
 
+    setPreview("");
+
     if (!isValidFileType(selectedFile)) {
       setError(ERROR_MESSAGES.INVALID_TYPE);
       resetFileState();

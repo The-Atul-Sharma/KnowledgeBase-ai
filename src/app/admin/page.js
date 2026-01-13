@@ -238,7 +238,7 @@ export default function AdminPage() {
             <EmbedTab user={user} setMessage={setMessage} />
           )}
 
-          {activeTab === "scraper" && <ScraperTab />}
+          {activeTab === "scraper" && <ScraperTab user={user} />}
         </div>
       </div>
     </div>

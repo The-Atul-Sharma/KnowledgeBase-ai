@@ -180,7 +180,7 @@ export default function AddDocumentTab({
           <button
             type="submit"
             disabled={!canSubmit}
-            className="w-full px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer font-medium"
+            className="w-full px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer font-medium"
           >
             {loading ? "Ingesting Document..." : "Ingest Document"}
           </button>
