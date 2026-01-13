@@ -11,6 +11,10 @@ export function useAdminContent(user, loadSources, searchQuery, currentPage) {
 
   const handleIngest = async (e) => {
     e.preventDefault();
+    if (!source.trim()) {
+      setMessage({ type: "error", text: "Title is required" });
+      return;
+    }
     if (!text.trim()) {
       setMessage({ type: "error", text: "Text content is required" });
       return;

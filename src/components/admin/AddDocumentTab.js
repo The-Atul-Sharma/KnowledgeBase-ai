@@ -33,6 +33,11 @@ export default function AddDocumentTab({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!source.trim()) {
+      setError("Title is required");
+      return;
+    }
+
     if (!file) {
       setError(ERROR_MESSAGES.NO_FILE);
       return;
@@ -61,6 +66,7 @@ export default function AddDocumentTab({
             onChange={(e) => setSource(e.target.value)}
             placeholder="e.g., product-docs, user-manual etc."
             className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800"
+            required
           />
         </div>
 

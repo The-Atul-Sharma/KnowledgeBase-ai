@@ -95,6 +95,11 @@ export default function AdminPage() {
     }
   }, [activeTab, user?.id, loadSettings, loadOllamaModels]);
 
+  useEffect(() => {
+    setSource("");
+    setDocumentSource("");
+  }, [activeTab, setSource, setDocumentSource]);
+
   const handleSaveSettings = async (e) => {
     e.preventDefault();
     await saveSettings(setSavingSettings, setMessage);

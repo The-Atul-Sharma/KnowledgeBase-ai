@@ -116,9 +116,7 @@ export function useDocumentUpload(source, setSource) {
       }
 
       setPreview(text);
-      if (!source.trim()) {
-        setSource(extractFileNameWithoutExtension(selectedFile.name));
-      }
+      setSource(extractFileNameWithoutExtension(selectedFile.name));
     } catch (err) {
       setError(`${ERROR_MESSAGES.PARSE_FAILED}: ${err.message}`);
       setPreview("");
