@@ -28,10 +28,11 @@ export function useAdminSettings(user) {
     }
   }, [user]);
 
-  const saveSettings = async (setLoading, setMessage) => {
+  const saveSettings = async (setLoading, setMessage, settingsToSave = null) => {
     if (!user) return;
 
-    const errors = validateAllColors(settings);
+    const settingsToValidate = settingsToSave || settings;
+    const errors = validateAllColors(settingsToValidate);
     if (Object.keys(errors).length > 0) {
       setColorErrors(errors);
       setMessage({
@@ -52,7 +53,7 @@ export function useAdminSettings(user) {
         },
         body: JSON.stringify({
           userId: user.id,
-          ...settings,
+          ...settingsToValidate,
         }),
       });
 

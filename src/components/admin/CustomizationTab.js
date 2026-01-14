@@ -163,33 +163,40 @@ export default function CustomizationTab({
   colorErrors,
   setColorErrors,
   handleSaveSettings,
+  saveSettings,
+  setMessage,
 }) {
   const [showResetModal, setShowResetModal] = useState(false);
 
   const handleResetToDefaults = () => {
-    setSettings({
-      ...settings,
-      chatbot_name: DEFAULT_SETTINGS.chatbot_name,
-      header_title: DEFAULT_SETTINGS.header_title,
-      icon_url: DEFAULT_SETTINGS.icon_url,
-      greeting_message: DEFAULT_SETTINGS.greeting_message,
-      custom_prompt: DEFAULT_SETTINGS.custom_prompt,
-      no_response_text: DEFAULT_SETTINGS.no_response_text,
-      input_placeholder: DEFAULT_SETTINGS.input_placeholder,
-      header_color: DEFAULT_SETTINGS.header_color,
-      header_text_color: DEFAULT_SETTINGS.header_text_color,
-      response_card_color: DEFAULT_SETTINGS.response_card_color,
-      response_text_color: DEFAULT_SETTINGS.response_text_color,
-      response_metadata_color: DEFAULT_SETTINGS.response_metadata_color,
-      user_card_color: DEFAULT_SETTINGS.user_card_color,
-      user_text_color: DEFAULT_SETTINGS.user_text_color,
-      close_icon_color: DEFAULT_SETTINGS.close_icon_color,
-      close_icon_bg_color: DEFAULT_SETTINGS.close_icon_bg_color,
-      chatbot_icon_bg_color: DEFAULT_SETTINGS.chatbot_icon_bg_color,
-      send_icon_color: DEFAULT_SETTINGS.send_icon_color,
-    });
+    const resetSettings = {
+      ...DEFAULT_SETTINGS,
+      llm_provider: settings.llm_provider || DEFAULT_SETTINGS.llm_provider,
+      embedding_provider:
+        settings.embedding_provider || DEFAULT_SETTINGS.embedding_provider,
+      ollama_api_url:
+        settings.ollama_api_url || DEFAULT_SETTINGS.ollama_api_url,
+      ollama_model: settings.ollama_model || DEFAULT_SETTINGS.ollama_model,
+      ollama_embedding_model:
+        settings.ollama_embedding_model ||
+        DEFAULT_SETTINGS.ollama_embedding_model,
+      openai_api_key:
+        settings.openai_api_key || DEFAULT_SETTINGS.openai_api_key,
+      gemini_api_key:
+        settings.gemini_api_key || DEFAULT_SETTINGS.gemini_api_key,
+      gemini_model: settings.gemini_model || DEFAULT_SETTINGS.gemini_model,
+      gemini_embedding_model:
+        settings.gemini_embedding_model ||
+        DEFAULT_SETTINGS.gemini_embedding_model,
+    };
+
+    setSettings(resetSettings);
     setColorErrors({});
     setShowResetModal(false);
+
+    if (saveSettings && setMessage) {
+      saveSettings(() => {}, setMessage, resetSettings);
+    }
   };
 
   return (
@@ -357,7 +364,7 @@ export default function CustomizationTab({
             </h3>
 
             <div className="mb-6">
-              <label className="block text-sm font-medium mb-2">
+              <label className="block text-sm font-medium mb-2 max-w-md">
                 Live Preview
               </label>
               <WidgetPreview settings={settings} />

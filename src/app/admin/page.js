@@ -233,6 +233,8 @@ export default function AdminPage() {
               colorErrors={colorErrors}
               setColorErrors={setColorErrors}
               handleSaveSettings={handleSaveSettings}
+              saveSettings={saveSettings}
+              setMessage={setMessage}
             />
           )}
 
