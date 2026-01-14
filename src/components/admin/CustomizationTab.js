@@ -7,16 +7,13 @@ import ColorInput from "./ColorInput";
 import WidgetPreview from "./WidgetPreview";
 import Modal from "../Modal";
 
-function IconPreview({ iconUrl, backgroundColor }) {
+function IconPreview({ iconUrl }) {
   const [imageError, setImageError] = useState(false);
 
   return (
     <div className="w-16 h-16 border border-gray-300 dark:border-gray-700 rounded-lg flex items-center justify-center bg-gray-50 dark:bg-gray-800">
       {iconUrl && !imageError ? (
-        <div
-          className="w-12 h-12 rounded flex items-center justify-center overflow-hidden relative"
-          style={{ backgroundColor }}
-        >
+        <div className="w-12 h-12 rounded flex items-center justify-center overflow-hidden relative">
           <Image
             key={iconUrl}
             src={iconUrl}
@@ -167,6 +164,53 @@ export default function CustomizationTab({
   setMessage,
 }) {
   const [showResetModal, setShowResetModal] = useState(false);
+  const [iconUploadError, setIconUploadError] = useState("");
+  const [iconUploading, setIconUploading] = useState(false);
+
+  const handleIconUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setIconUploadError("");
+    setIconUploading(true);
+
+    if (!file.type.includes("svg") && !file.name.endsWith(".svg")) {
+      setIconUploadError("Please upload an SVG file");
+      setIconUploading(false);
+      e.target.value = "";
+      return;
+    }
+
+    if (file.size > 500 * 1024) {
+      setIconUploadError("File size must be less than 500KB");
+      setIconUploading(false);
+      e.target.value = "";
+      return;
+    }
+
+    try {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        setSettings({
+          ...settings,
+          icon_url: dataUrl,
+        });
+        setIconUploading(false);
+        e.target.value = "";
+      };
+      reader.onerror = () => {
+        setIconUploadError("Failed to read file");
+        setIconUploading(false);
+        e.target.value = "";
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      setIconUploadError(error.message || "Failed to upload icon");
+      setIconUploading(false);
+      e.target.value = "";
+    }
+  };
 
   const handleResetToDefaults = () => {
     const resetSettings = {
@@ -246,36 +290,84 @@ export default function CustomizationTab({
 
           <div>
             <label className="block text-sm font-medium mb-2">
-              Icon URL (optional)
+              Icon (optional)
             </label>
-            <div className="flex items-start gap-4">
-              <input
-                type="url"
-                value={settings.icon_url || ""}
-                onChange={(e) =>
-                  setSettings({
-                    ...settings,
-                    icon_url: e.target.value,
-                  })
-                }
-                placeholder="https://example.com/icon.png"
-                className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800"
-              />
-              <div className="flex-shrink-0">
-                <IconPreview
-                  iconUrl={settings.icon_url}
-                  backgroundColor={
-                    settings.chatbot_icon_bg_color ||
-                    DEFAULT_SETTINGS.chatbot_icon_bg_color
-                  }
-                />
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">
-                  Preview
-                </p>
+            <div className="space-y-3">
+              <div className="flex items-start gap-4">
+                <div className="flex-1 space-y-2">
+                  <div className="border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-4 text-center hover:border-blue-500 transition-colors">
+                    <input
+                      type="file"
+                      id="icon-upload"
+                      accept=".svg,image/svg+xml"
+                      onChange={handleIconUpload}
+                      className="hidden"
+                      disabled={iconUploading}
+                    />
+                    <label
+                      htmlFor="icon-upload"
+                      className={`cursor-pointer flex flex-col items-center ${
+                        iconUploading ? "opacity-50" : ""
+                      }`}
+                    >
+                      <svg
+                        className="w-8 h-8 text-gray-400 mb-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                        />
+                      </svg>
+                      <span className="text-sm text-gray-600 dark:text-gray-400">
+                        {iconUploading ? "Uploading..." : "Upload SVG"}
+                      </span>
+                      <span className="text-xs text-gray-500 dark:text-gray-500 mt-1">
+                        SVG only (Max 500KB)
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                {settings.icon_url && (
+                  <div className="flex-shrink-0">
+                    <IconPreview iconUrl={settings.icon_url} />
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 text-center">
+                      Preview
+                    </p>
+                  </div>
+                )}
               </div>
+              {iconUploadError && (
+                <div className="mt-2 text-sm text-red-600 dark:text-red-400">
+                  {iconUploadError}
+                </div>
+              )}
+              {settings.icon_url && (
+                <div className="mt-2 flex items-center justify-between bg-gray-100 dark:bg-gray-800 rounded-lg p-2">
+                  <span className="text-xs text-gray-600 dark:text-gray-400">
+                    Icon uploaded
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setSettings({
+                        ...settings,
+                        icon_url: "",
+                      })
+                    }
+                    className="text-red-500 hover:text-red-700 text-xs font-medium cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                </div>
+              )}
             </div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              Leave empty to use default icon
+              Upload an SVG file. Leave empty to use default icon.
             </p>
           </div>
 

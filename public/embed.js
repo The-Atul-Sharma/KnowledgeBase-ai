@@ -310,11 +310,20 @@
   function renderButton(state, container, onOpen) {
     const iconBg =
       state.settings?.chatbot_icon_bg_color || DEFAULT_COLORS.iconBg;
+    const iconUrl = state.settings?.icon_url;
+    
+    let buttonContent = "";
+    if (iconUrl) {
+      buttonContent = `<img src="${iconUrl}" alt="Chatbot" style="width: 24px; height: 24px; object-fit: contain;" />`;
+    } else {
+      buttonContent = `<svg width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg>`;
+    }
+    
     container.innerHTML = `
       <button class="chatbot-widget-button" style="background-color: ${iconBg}">
-        <svg width="24" height="24" fill="none" stroke="white" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-        </svg>
+        ${buttonContent}
       </button>
     `;
     const button = container.querySelector(".chatbot-widget-button");
@@ -326,22 +335,17 @@
     const headerColor = settings.header_color || DEFAULT_COLORS.header;
     const headerTextColor =
       settings.header_text_color || DEFAULT_COLORS.headerText;
-    const iconBg = settings.chatbot_icon_bg_color || DEFAULT_COLORS.iconBg;
     const closeIconBg =
       settings.close_icon_bg_color || DEFAULT_COLORS.closeIconBg;
     const closeIconColor =
       settings.close_icon_color || DEFAULT_COLORS.closeIconColor;
 
-    const iconHtml = settings.icon_url
-      ? `<div class="chatbot-widget-icon" style="background-color: ${iconBg};">
-          <img src="${settings.icon_url}" alt="${settings.chatbot_name}" />
-        </div>`
-      : '<div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>';
+    const greenDot = '<div style="width: 8px; height: 8px; background: #10b981; border-radius: 50%;"></div>';
 
     return `
       <div class="chatbot-widget-header" style="background-color: ${headerColor}; color: ${headerTextColor};">
         <div class="chatbot-widget-header-content">
-          ${iconHtml}
+          ${greenDot}
           <div class="chatbot-widget-title">${
             settings.header_title || "Knowledge Base Support"
           }</div>

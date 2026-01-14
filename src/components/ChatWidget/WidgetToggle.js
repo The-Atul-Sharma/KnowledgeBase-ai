@@ -20,24 +20,17 @@ export default function WidgetToggle({ onOpen, customization }) {
       aria-label="Open chat"
     >
       {customization?.icon_url && !iconError ? (
-        <div
-          className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden relative"
-          style={{
-            backgroundColor: iconBgColor,
-          }}
-        >
-          <Image
-            key={customization.icon_url}
-            src={customization.icon_url}
-            alt={customization.chatbot_name || "Chatbot"}
-            width={40}
-            height={40}
-            className="object-contain rounded-full"
-            unoptimized
-            onError={() => setIconError(true)}
-            onLoad={() => setIconError(false)}
-          />
-        </div>
+        <Image
+          key={customization.icon_url}
+          src={customization.icon_url}
+          alt={customization.chatbot_name || "Chatbot"}
+          width={24}
+          height={24}
+          className="object-contain"
+          unoptimized
+          onError={() => setIconError(true)}
+          onLoad={() => setIconError(false)}
+        />
       ) : (
         <svg
           className="w-6 h-6"

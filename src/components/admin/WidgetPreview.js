@@ -47,26 +47,20 @@ function ChatIcon({
   onIconLoad,
   chatbotName,
   bgColor,
-  size = "large",
 }) {
-  const isLarge = size === "large";
-  const containerSize = isLarge ? "w-10 h-10" : "w-4 h-4";
-  const imageSize = isLarge ? 40 : 16;
-  const roundedClass = isLarge ? "rounded-full" : "rounded";
-
   if (iconUrl && !iconError) {
     return (
       <div
-        className={`${containerSize} ${roundedClass} flex items-center justify-center overflow-hidden relative`}
+        className={`w-10 h-10 rounded-full flex items-center justify-center overflow-hidden relative`}
         style={{ backgroundColor: bgColor || DEFAULT_ICON_BG }}
       >
         <Image
           key={iconUrl}
           src={iconUrl}
           alt={chatbotName}
-          width={imageSize}
-          height={imageSize}
-          className={`object-contain ${roundedClass}`}
+          width={24}
+          height={24}
+          className={`object-contain rounded-full`}
           unoptimized
           onError={onIconError}
           onLoad={onIconLoad}
@@ -75,25 +69,21 @@ function ChatIcon({
     );
   }
 
-  if (isLarge) {
-    return (
-      <svg
-        className="w-6 h-6 text-white"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 24 24"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-        />
-      </svg>
-    );
-  }
-
-  return <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>;
+  return (
+    <svg
+      className="w-6 h-6 text-white"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+      />
+    </svg>
+  );
 }
 
 function WidgetHeader({ customization, iconError, onIconError, onIconLoad }) {
@@ -106,15 +96,7 @@ function WidgetHeader({ customization, iconError, onIconError, onIconLoad }) {
       }}
     >
       <div className="flex items-center gap-1.5">
-        <ChatIcon
-          iconUrl={customization.icon_url}
-          iconError={iconError}
-          onIconError={onIconError}
-          onIconLoad={onIconLoad}
-          chatbotName={customization.chatbot_name}
-          bgColor={customization.chatbot_icon_bg_color}
-          size="small"
-        />
+        <div className="w-1.5 h-1.5 bg-green-400 rounded-full"></div>
         <h3 className="font-semibold text-xs">{customization.header_title}</h3>
       </div>
       <button
@@ -242,7 +224,6 @@ export default function WidgetPreview({ settings }) {
             onIconLoad={handleIconLoad}
             chatbotName={customization.chatbot_name}
             bgColor={customization.chatbot_icon_bg_color}
-            size="large"
           />
         </button>
       </div>

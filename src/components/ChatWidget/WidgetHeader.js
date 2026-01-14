@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { DEFAULT_SETTINGS } from "@/constants";
 
 export default function WidgetHeader({ customization, onClose }) {
@@ -15,27 +14,7 @@ export default function WidgetHeader({ customization, onClose }) {
       }}
     >
       <div className="flex items-center gap-2">
-        {customization.icon_url ? (
-          <div
-            className="w-6 h-6 rounded flex items-center justify-center"
-            style={{
-              backgroundColor:
-                customization.chatbot_icon_bg_color ||
-                DEFAULT_SETTINGS.chatbot_icon_bg_color,
-            }}
-          >
-            <Image
-              src={customization.icon_url}
-              alt={customization.chatbot_name}
-              width={24}
-              height={24}
-              className="rounded"
-              unoptimized
-            />
-          </div>
-        ) : (
-          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-        )}
+        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
         <h2 className="font-semibold">{customization.header_title}</h2>
       </div>
       <button
