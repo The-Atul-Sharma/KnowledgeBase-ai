@@ -8,17 +8,10 @@ function groupChunksBySource(chunks) {
     if (!grouped[source]) {
       grouped[source] = {
         source,
-        chunks: [],
         totalChunks: 0,
-        title: chunk.metadata?.title || "N/A",
         createdAt: chunk.created_at,
       };
     }
-    grouped[source].chunks.push({
-      id: chunk.id,
-      content: chunk.content.substring(0, 150) + "...",
-      similarity: null,
-    });
     grouped[source].totalChunks++;
   });
 
@@ -32,10 +25,7 @@ function filterSources(sources, searchQuery) {
 
   const lowerQuery = searchQuery.toLowerCase();
   return sources.filter((sourceItem) => {
-    return (
-      sourceItem.source.toLowerCase().includes(lowerQuery) ||
-      sourceItem.title?.toLowerCase().includes(lowerQuery)
-    );
+    return sourceItem.source.toLowerCase().includes(lowerQuery);
   });
 }
 
@@ -51,17 +41,6 @@ function paginate(items, page, itemsPerPage) {
     currentPage: page,
     totalItems: items.length,
   };
-}
-
-function formatChunks(chunks) {
-  return (
-    chunks?.map((chunk) => ({
-      id: chunk.id,
-      content: chunk.content.substring(0, 200) + "...",
-      metadata: chunk.metadata,
-      createdAt: chunk.created_at,
-    })) || []
-  );
 }
 
 export async function GET(request) {
@@ -105,7 +84,6 @@ export async function GET(request) {
       currentPage: pagination.currentPage,
       totalPages: pagination.totalPages,
       itemsPerPage,
-      chunks: formatChunks(data),
     });
   } catch (error) {
     return Response.json(

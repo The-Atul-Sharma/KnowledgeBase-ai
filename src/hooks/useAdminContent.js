@@ -113,10 +113,6 @@ export function useAdminContent(user, loadSources, searchQuery, currentPage) {
       return;
     }
 
-    if (!confirm(`Delete all chunks with source "${sourceToDelete}"?`)) {
-      return;
-    }
-
     setLoading(true);
     setMessage(null);
 

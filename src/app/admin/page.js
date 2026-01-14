@@ -207,6 +207,7 @@ export default function AdminPage() {
               itemsPerPage={itemsPerPage}
               loading={loading}
               handleDelete={handleDelete}
+              user={user}
             />
           )}
 
@@ -239,7 +240,9 @@ export default function AdminPage() {
             <EmbedTab user={user} setMessage={setMessage} />
           )}
 
-          {activeTab === "scraper" && <ScraperTab user={user} />}
+          {activeTab === "scraper" && (
+            <ScraperTab user={user} setMessage={setMessage} />
+          )}
         </div>
       </div>
     </div>
