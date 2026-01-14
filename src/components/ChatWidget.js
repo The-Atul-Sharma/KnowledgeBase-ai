@@ -34,7 +34,12 @@ export default function ChatWidget() {
 
   return (
     <>
-      {!isOpen && <WidgetToggle onOpen={() => setIsOpen(true)} />}
+      {!isOpen && (
+        <WidgetToggle
+          onOpen={() => setIsOpen(true)}
+          customization={customization}
+        />
+      )}
       {isOpen && (
         <div className="fixed bottom-6 right-6 w-96 h-[600px] bg-white dark:bg-gray-900 rounded-lg shadow-2xl flex flex-col z-50 border border-gray-200 dark:border-gray-700">
           <WidgetHeader
