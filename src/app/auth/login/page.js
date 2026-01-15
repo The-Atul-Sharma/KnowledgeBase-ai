@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/lib/supabase";
+import { useAuth } from "@/hooks/useAuth";
 import Header from "@/components/Header";
 
 const ErrorMessage = ({ message }) => {
@@ -173,6 +174,8 @@ const useOTPAuth = () => {
 };
 
 export default function LoginPage() {
+  const router = useRouter();
+  const { user, loading: authLoading } = useAuth();
   const {
     email,
     setEmail,
@@ -185,6 +188,16 @@ export default function LoginPage() {
     verifyOTP,
     resetEmail,
   } = useOTPAuth();
+
+  useEffect(() => {
+    if (!authLoading && user) {
+      router.replace("/");
+    }
+  }, [user, authLoading, router]);
+
+  if (authLoading || user) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900">

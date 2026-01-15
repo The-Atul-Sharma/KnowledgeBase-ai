@@ -77,7 +77,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push("/auth/login");
+      router.replace("/auth/login");
     }
   }, [user, authLoading, router]);
 
@@ -109,7 +109,7 @@ export default function AdminPage() {
     await handleDeleteContent(sourceToDelete);
   };
 
-  if (authLoading) {
+  if (authLoading || !user) {
     return null;
   }
 
